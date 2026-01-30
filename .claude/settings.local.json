@@ -6,7 +6,11 @@
       "Bash(powershell -Command \"$content = Get-Content index.html -Raw; $pattern = ''\\(?s\\)  <!-- REMOVE_START -->.*?<!-- REMOVE_END -->\\\\r?\\\\n''; $content = $content -replace $pattern, ''''; Set-Content index.html -Value $content -NoNewline\")",
       "Bash(python -c:*)",
       "Bash(powershell:*)",
-      "Bash(node -e:*)"
+      "Bash(node -e:*)",
+      "WebFetch(domain:docs.geo.admin.ch)",
+      "WebFetch(domain:api3.geo.admin.ch)",
+      "Bash(curl:*)",
+      "Bash(python3:*)"
     ]
   }
 }

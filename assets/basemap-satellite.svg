@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="68" height="68" viewBox="0 0 68 68">
+  <defs>
+    <linearGradient id="land" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3d5a3d"/>
+      <stop offset="50%" stop-color="#4a6b4a"/>
+      <stop offset="100%" stop-color="#3a5438"/>
+    </linearGradient>
+  </defs>
+  <!-- Base terrain -->
+  <rect width="68" height="68" fill="url(#land)"/>
+  <!-- Darker patches (trees/shadows) -->
+  <ellipse cx="12" cy="15" rx="10" ry="8" fill="#2d4a2d"/>
+  <ellipse cx="50" cy="8" rx="14" ry="10" fill="#35523a"/>
+  <ellipse cx="25" cy="35" rx="8" ry="6" fill="#2d4a2d"/>
+  <ellipse cx="58" cy="40" rx="12" ry="9" fill="#325030"/>
+  <!-- Water -->
+  <path d="M0 52 Q18 48 32 54 T68 50 V68 H0 Z" fill="#1a3a4a"/>
+  <!-- Roads (lighter lines) -->
+  <line x1="10" y1="0" x2="10" y2="52" stroke="#5a6a5a" stroke-width="2"/>
+  <line x1="0" y1="26" x2="68" y2="22" stroke="#6a7a6a" stroke-width="2.5"/>
+  <!-- Buildings (grey rectangles) -->
+  <rect x="16" y="10" width="6" height="8" fill="#555"/>
+  <rect x="30" y="6" width="5" height="6" fill="#4a4a4a"/>
+  <rect x="44" y="28" width="8" height="5" fill="#555"/>
+  <rect x="20" y="38" width="10" height="6" fill="#4a4a4a"/>
+</svg>

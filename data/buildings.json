@@ -14,7 +14,7 @@
       "gwr": 100
     },
     "assignee": "M. Keller",
-    "kanbanStatus": "assigned",
+    "kanbanStatus": "inprogress",
     "data": {
       "address": {
         "sap": "Friedrichshafnerstr.",
@@ -60,7 +60,7 @@
       "gwr": 40
     },
     "assignee": null,
-    "kanbanStatus": "open",
+    "kanbanStatus": "backlog",
     "data": {
       "address": {
         "sap": "Hauptstrasse 12",
@@ -106,7 +106,7 @@
       "gwr": 70
     },
     "assignee": "S. Brunner",
-    "kanbanStatus": "review",
+    "kanbanStatus": "clarification",
     "data": {
       "address": {
         "sap": "Bahnhofplatz 1",
@@ -198,7 +198,7 @@
       "gwr": 70
     },
     "assignee": "T. Weber",
-    "kanbanStatus": "assigned",
+    "kanbanStatus": "inprogress",
     "data": {
       "address": {
         "sap": "Bundesgasse 3",
@@ -244,7 +244,7 @@
       "gwr": 35
     },
     "assignee": null,
-    "kanbanStatus": "open",
+    "kanbanStatus": "backlog",
     "data": {
       "address": {
         "sap": "Grabenstrasse 1",
@@ -290,7 +290,7 @@
       "gwr": 60
     },
     "assignee": "A. Meier",
-    "kanbanStatus": "assigned",
+    "kanbanStatus": "inprogress",
     "data": {
       "address": {
         "sap": "Technikumstrasse 8",
@@ -336,7 +336,7 @@
       "gwr": 80
     },
     "assignee": null,
-    "kanbanStatus": "open",
+    "kanbanStatus": "backlog",
     "data": {
       "address": {
         "sap": "Schlossmühlestrasse 15",
@@ -428,7 +428,7 @@
       "gwr": 67
     },
     "assignee": "M. Keller",
-    "kanbanStatus": "review",
+    "kanbanStatus": "clarification",
     "data": {
       "address": {
         "sap": "Hirschengraben 15",
@@ -474,7 +474,7 @@
       "gwr": 30
     },
     "assignee": null,
-    "kanbanStatus": "open",
+    "kanbanStatus": "backlog",
     "data": {
       "address": {
         "sap": "Rue de Lausanne 65",
@@ -520,7 +520,7 @@
       "gwr": 82
     },
     "assignee": "S. Brunner",
-    "kanbanStatus": "assigned",
+    "kanbanStatus": "inprogress",
     "data": {
       "address": {
         "sap": "Via Nassa 29",
@@ -550,5 +550,213 @@
     },
     "lastUpdate": "2026-01-24T12:15:00Z",
     "lastUpdateBy": "S. Brunner"
+  },
+  {
+    "id": "1170/2050/AM",
+    "name": "Aarau, Bahnhofstrasse 20",
+    "lat": 47.3925,
+    "lng": 8.0444,
+    "kanton": "AG",
+    "portfolio": "Büro",
+    "priority": "high",
+    "confidence": {
+      "total": 45,
+      "georef": 30,
+      "sap": 55,
+      "gwr": 50
+    },
+    "assignee": "A. Meier",
+    "kanbanStatus": "clarification",
+    "data": {
+      "address": { "sap": "Bahnhofstrasse 20", "gwr": "Bahnhofstr. 20", "match": false },
+      "plz": { "sap": "5000", "gwr": "5000", "match": true },
+      "coords": { "sap": "47.3920, 8.0440", "gwr": "47.3925, 8.0444", "match": true },
+      "egid": { "sap": "1234567", "gwr": "1234567", "match": true },
+      "year": { "sap": "1985", "gwr": "1987", "match": false }
+    },
+    "lastUpdate": "2026-01-29T10:00:00Z",
+    "lastUpdateBy": "A. Meier"
+  },
+  {
+    "id": "1180/3060/AN",
+    "name": "Solothurn, Hauptgasse 5",
+    "lat": 47.2088,
+    "lng": 7.5378,
+    "kanton": "SO",
+    "portfolio": "Öffentlich",
+    "priority": "medium",
+    "confidence": {
+      "total": 92,
+      "georef": 95,
+      "sap": 90,
+      "gwr": 90
+    },
+    "assignee": "T. Weber",
+    "kanbanStatus": "done",
+    "data": {
+      "address": { "sap": "Hauptgasse 5", "gwr": "Hauptgasse 5", "match": true },
+      "plz": { "sap": "4500", "gwr": "4500", "match": true },
+      "coords": { "sap": "47.2088, 7.5378", "gwr": "47.2088, 7.5378", "match": true },
+      "egid": { "sap": "2345678", "gwr": "2345678", "match": true },
+      "year": { "sap": "1972", "gwr": "1972", "match": true }
+    },
+    "lastUpdate": "2026-01-28T16:30:00Z",
+    "lastUpdateBy": "T. Weber"
+  },
+  {
+    "id": "1190/4070/AO",
+    "name": "Thun, Bälliz 42",
+    "lat": 46.758,
+    "lng": 7.629,
+    "kanton": "BE",
+    "portfolio": "Wohnen",
+    "priority": "low",
+    "confidence": {
+      "total": 88,
+      "georef": 90,
+      "sap": 85,
+      "gwr": 88
+    },
+    "assignee": null,
+    "kanbanStatus": "done",
+    "data": {
+      "address": { "sap": "Bälliz 42", "gwr": "Bälliz 42", "match": true },
+      "plz": { "sap": "3600", "gwr": "3600", "match": true },
+      "coords": { "sap": "46.758, 7.629", "gwr": "46.758, 7.629", "match": true },
+      "egid": { "sap": "3456789", "gwr": "3456789", "match": true },
+      "year": { "sap": "1998", "gwr": "1998", "match": true }
+    },
+    "lastUpdate": "2026-01-27T09:15:00Z",
+    "lastUpdateBy": "M. Keller"
+  },
+  {
+    "id": "1200/5080/AP",
+    "name": "Biel, Nidaugasse 14",
+    "lat": 47.1368,
+    "lng": 7.2467,
+    "kanton": "BE",
+    "portfolio": "Industrie",
+    "priority": "high",
+    "confidence": {
+      "total": 38,
+      "georef": 25,
+      "sap": 45,
+      "gwr": 45
+    },
+    "assignee": "S. Brunner",
+    "kanbanStatus": "inprogress",
+    "data": {
+      "address": { "sap": "Nidaugasse 14", "gwr": "Nidaugasse 14", "match": true },
+      "plz": { "sap": "2502", "gwr": "2501", "match": false },
+      "coords": { "sap": "—", "gwr": "47.1368, 7.2467", "match": false },
+      "egid": { "sap": "—", "gwr": "4567890", "match": false },
+      "year": { "sap": "1955", "gwr": "1958", "match": false }
+    },
+    "lastUpdate": "2026-01-30T11:00:00Z",
+    "lastUpdateBy": "S. Brunner"
+  },
+  {
+    "id": "1210/6090/AQ",
+    "name": "Schaffhausen, Vordergasse 61",
+    "lat": 47.6961,
+    "lng": 8.635,
+    "kanton": "SH",
+    "portfolio": "Büro",
+    "priority": "medium",
+    "confidence": {
+      "total": 75,
+      "georef": 80,
+      "sap": 70,
+      "gwr": 75
+    },
+    "assignee": null,
+    "kanbanStatus": "backlog",
+    "data": {
+      "address": { "sap": "Vordergasse 61", "gwr": "Vordergasse 61", "match": true },
+      "plz": { "sap": "8200", "gwr": "8200", "match": true },
+      "coords": { "sap": "47.6959, 8.6348", "gwr": "47.6961, 8.6350", "match": true },
+      "egid": { "sap": "5678901", "gwr": "5678901", "match": true },
+      "year": { "sap": "—", "gwr": "1965", "match": false }
+    },
+    "lastUpdate": "2026-01-22T14:45:00Z",
+    "lastUpdateBy": "System"
+  },
+  {
+    "id": "1220/7100/AR",
+    "name": "Zug, Baarerstrasse 8",
+    "lat": 47.1724,
+    "lng": 8.5179,
+    "kanton": "ZG",
+    "portfolio": "Öffentlich",
+    "priority": "low",
+    "confidence": {
+      "total": 96,
+      "georef": 98,
+      "sap": 95,
+      "gwr": 95
+    },
+    "assignee": "M. Keller",
+    "kanbanStatus": "done",
+    "data": {
+      "address": { "sap": "Baarerstrasse 8", "gwr": "Baarerstrasse 8", "match": true },
+      "plz": { "sap": "6300", "gwr": "6300", "match": true },
+      "coords": { "sap": "47.1724, 8.5179", "gwr": "47.1724, 8.5179", "match": true },
+      "egid": { "sap": "6789012", "gwr": "6789012", "match": true },
+      "year": { "sap": "2015", "gwr": "2015", "match": true }
+    },
+    "lastUpdate": "2026-01-30T08:30:00Z",
+    "lastUpdateBy": "M. Keller"
+  },
+  {
+    "id": "1230/8110/AS",
+    "name": "Neuchâtel, Rue du Seyon 12",
+    "lat": 46.992,
+    "lng": 6.931,
+    "kanton": "NE",
+    "portfolio": "Bildung",
+    "priority": "medium",
+    "confidence": {
+      "total": 58,
+      "georef": 55,
+      "sap": 60,
+      "gwr": 60
+    },
+    "assignee": "T. Weber",
+    "kanbanStatus": "clarification",
+    "data": {
+      "address": { "sap": "Rue du Seyon 12", "gwr": "Rue du Seyon 12", "match": true },
+      "plz": { "sap": "2000", "gwr": "2000", "match": true },
+      "coords": { "sap": "46.990, 6.929", "gwr": "46.992, 6.931", "match": false },
+      "egid": { "sap": "7890123", "gwr": "7890124", "match": false },
+      "year": { "sap": "1980", "gwr": "1982", "match": false }
+    },
+    "lastUpdate": "2026-01-29T15:20:00Z",
+    "lastUpdateBy": "T. Weber"
+  },
+  {
+    "id": "1240/9120/AT",
+    "name": "Sion, Avenue de la Gare 3",
+    "lat": 46.2333,
+    "lng": 7.3592,
+    "kanton": "VS",
+    "portfolio": "Wohnen",
+    "priority": "high",
+    "confidence": {
+      "total": 32,
+      "georef": 15,
+      "sap": 40,
+      "gwr": 40
+    },
+    "assignee": null,
+    "kanbanStatus": "backlog",
+    "data": {
+      "address": { "sap": "Avenue de la Gare 3", "gwr": "Av. de la Gare 3", "match": false },
+      "plz": { "sap": "1950", "gwr": "1950", "match": true },
+      "coords": { "sap": "—", "gwr": "46.2333, 7.3592", "match": false },
+      "egid": { "sap": "—", "gwr": "8901234", "match": false },
+      "year": { "sap": "1970", "gwr": "1972", "match": false }
+    },
+    "lastUpdate": "2026-01-18T10:00:00Z",
+    "lastUpdateBy": "System"
   }
 ]

@@ -1,0 +1,238 @@
+{
+  "version": "1.0",
+  "description": "BBL Geo-Check validation rules",
+  "ruleSets": [
+    {
+      "id": "gwr-basic",
+      "name": "GWR Grundprüfungen",
+      "description": "Grundlegende Validierungen gegen das Gebäude- und Wohnungsregister",
+      "enabled": true,
+      "entityType": "building",
+      "rules": [
+        {
+          "id": "gwr-001",
+          "name": "EGID vorhanden",
+          "description": "Prüft ob eine gültige EGID (Eidgenössischer Gebäudeidentifikator) vorhanden ist",
+          "attribute": "egid",
+          "operator": "exists",
+          "severity": "error",
+          "message": "Keine EGID vorhanden"
+        },
+        {
+          "id": "gwr-002",
+          "name": "EGID Format",
+          "description": "Prüft ob die EGID dem korrekten Format entspricht (9-stellige Zahl)",
+          "attribute": "egid",
+          "operator": "matches",
+          "value": "^[0-9]{9}$",
+          "severity": "error",
+          "message": "EGID hat ungültiges Format (erwartet: 9-stellige Zahl)"
+        },
+        {
+          "id": "gwr-003",
+          "name": "Gebäudestatus gültig",
+          "description": "Prüft ob der Gebäudestatus einem gültigen GWR-Wert entspricht",
+          "attribute": "gwr_status",
+          "operator": "in",
+          "value": ["projektiert", "im_bau", "bestehend", "nicht_nutzbar", "abgebrochen"],
+          "severity": "error",
+          "message": "Ungültiger Gebäudestatus: {value}"
+        },
+        {
+          "id": "gwr-004",
+          "name": "Baujahr plausibel",
+          "description": "Prüft ob das Baujahr im plausiblen Bereich liegt",
+          "attribute": "baujahr",
+          "operator": "between",
+          "value": [1800, 2030],
+          "severity": "warning",
+          "message": "Baujahr {value} ausserhalb des plausiblen Bereichs"
+        }
+      ]
+    },
+    {
+      "id": "geo-quality",
+      "name": "Geometrie-Qualität",
+      "description": "Prüfungen zur Qualität der Geodaten und Koordinaten",
+      "enabled": true,
+      "entityType": "building",
+      "rules": [
+        {
+          "id": "geo-001",
+          "name": "Koordinaten in Schweiz",
+          "description": "Prüft ob die Koordinaten innerhalb der Schweizer Landesgrenzen liegen",
+          "attribute": ["lat", "lng"],
+          "operator": "within_bounds",
+          "value": {
+            "lat_min": 45.8,
+            "lat_max": 47.9,
+            "lng_min": 5.9,
+            "lng_max": 10.5
+          },
+          "severity": "error",
+          "message": "Koordinaten liegen ausserhalb der Schweiz"
+        },
+        {
+          "id": "geo-002",
+          "name": "Koordinaten-Präzision",
+          "description": "Prüft ob die Koordinaten ausreichend präzise sind (mind. 5 Dezimalstellen)",
+          "attribute": ["lat", "lng"],
+          "operator": "decimal_places",
+          "value": 5,
+          "severity": "warning",
+          "message": "Koordinaten haben unzureichende Präzision"
+        },
+        {
+          "id": "geo-003",
+          "name": "Adresse-Koordinaten-Match",
+          "description": "Prüft ob die Adresse und Koordinaten übereinstimmen",
+          "attribute": "address_coord_distance",
+          "operator": "less_than",
+          "value": 50,
+          "unit": "meters",
+          "severity": "warning",
+          "message": "Adresse und Koordinaten weichen um {value}m ab"
+        }
+      ]
+    },
+    {
+      "id": "sap-refx",
+      "name": "SAP RE-FX Abgleich",
+      "description": "Prüfungen gegen das SAP Real Estate System",
+      "enabled": true,
+      "entityType": "building",
+      "rules": [
+        {
+          "id": "sap-001",
+          "name": "RE-Objekt vorhanden",
+          "description": "Prüft ob ein zugehöriges RE-Objekt in SAP existiert",
+          "attribute": "sap_re_id",
+          "operator": "exists",
+          "severity": "warning",
+          "message": "Kein SAP RE-FX Objekt verknüpft"
+        },
+        {
+          "id": "sap-002",
+          "name": "Fläche plausibel",
+          "description": "Prüft ob die Fläche im plausiblen Bereich liegt",
+          "attribute": "flaeche_m2",
+          "operator": "between",
+          "value": [1, 1000000],
+          "severity": "warning",
+          "message": "Fläche {value} m² ausserhalb des plausiblen Bereichs"
+        },
+        {
+          "id": "sap-003",
+          "name": "Flächen-Abweichung GWR",
+          "description": "Prüft ob die SAP-Fläche mit der GWR-Fläche übereinstimmt (max. 10% Abweichung)",
+          "attribute": ["sap_flaeche", "gwr_flaeche"],
+          "operator": "deviation_percent",
+          "value": 10,
+          "severity": "warning",
+          "message": "Flächen-Abweichung zwischen SAP und GWR: {value}%"
+        }
+      ]
+    },
+    {
+      "id": "oereb-check",
+      "name": "ÖREB Prüfungen",
+      "description": "Prüfungen gegen den ÖREB-Kataster",
+      "enabled": true,
+      "entityType": "building",
+      "rules": [
+        {
+          "id": "oereb-001",
+          "name": "ÖREB-Kanton aktiv",
+          "description": "Prüft ob der Kanton ÖREB-Daten bereitstellt",
+          "attribute": "kanton",
+          "operator": "lookup",
+          "lookupTable": "oereb_kantone",
+          "lookupField": "active",
+          "value": true,
+          "severity": "info",
+          "message": "Kanton {value} hat noch keinen aktiven ÖREB-Kataster"
+        },
+        {
+          "id": "oereb-002",
+          "name": "Grundstück-ID vorhanden",
+          "description": "Prüft ob eine Grundstück-ID für ÖREB-Abfragen vorhanden ist",
+          "attribute": "grundstueck_id",
+          "operator": "exists",
+          "severity": "warning",
+          "message": "Keine Grundstück-ID für ÖREB-Abfrage vorhanden"
+        }
+      ]
+    },
+    {
+      "id": "completeness",
+      "name": "Vollständigkeit",
+      "description": "Prüft die Vollständigkeit der erfassten Daten",
+      "enabled": true,
+      "entityType": "building",
+      "rules": [
+        {
+          "id": "comp-001",
+          "name": "Pflichtfelder",
+          "description": "Prüft ob alle Pflichtfelder ausgefüllt sind",
+          "attribute": ["name", "strasse", "plz", "ort", "kanton"],
+          "operator": "all_exist",
+          "severity": "error",
+          "message": "Pflichtfeld '{attribute}' ist nicht ausgefüllt"
+        },
+        {
+          "id": "comp-002",
+          "name": "Portfolio zugewiesen",
+          "description": "Prüft ob das Gebäude einem Portfolio zugewiesen ist",
+          "attribute": "portfolio",
+          "operator": "exists",
+          "severity": "warning",
+          "message": "Gebäude ist keinem Portfolio zugewiesen"
+        },
+        {
+          "id": "comp-003",
+          "name": "Verantwortlicher zugewiesen",
+          "description": "Prüft ob ein Verantwortlicher zugewiesen ist",
+          "attribute": "assignee",
+          "operator": "exists",
+          "severity": "info",
+          "message": "Kein Verantwortlicher zugewiesen"
+        }
+      ]
+    }
+  ],
+  "operators": {
+    "exists": "Prüft ob der Wert vorhanden und nicht leer ist",
+    "not_exists": "Prüft ob der Wert nicht vorhanden oder leer ist",
+    "equals": "Prüft auf exakte Übereinstimmung",
+    "not_equals": "Prüft auf Ungleichheit",
+    "in": "Prüft ob der Wert in einer Liste enthalten ist",
+    "not_in": "Prüft ob der Wert nicht in einer Liste enthalten ist",
+    "matches": "Prüft gegen einen regulären Ausdruck",
+    "contains": "Prüft ob der Wert einen Teilstring enthält",
+    "greater_than": "Prüft ob der Wert grösser ist",
+    "less_than": "Prüft ob der Wert kleiner ist",
+    "between": "Prüft ob der Wert in einem Bereich liegt",
+    "within_bounds": "Prüft ob Koordinaten in einem Gebiet liegen",
+    "decimal_places": "Prüft die Anzahl Dezimalstellen",
+    "deviation_percent": "Prüft die prozentuale Abweichung zwischen zwei Werten",
+    "all_exist": "Prüft ob alle angegebenen Attribute vorhanden sind",
+    "lookup": "Prüft einen Wert gegen eine Lookup-Tabelle"
+  },
+  "severityLevels": {
+    "error": {
+      "priority": 1,
+      "label": "Fehler",
+      "description": "Kritischer Fehler, muss korrigiert werden"
+    },
+    "warning": {
+      "priority": 2,
+      "label": "Warnung",
+      "description": "Potenzielles Problem, sollte überprüft werden"
+    },
+    "info": {
+      "priority": 3,
+      "label": "Hinweis",
+      "description": "Information zur Kenntnisnahme"
+    }
+  }
+}

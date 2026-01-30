@@ -35,7 +35,7 @@
       <button class="nav-tab active" data-tab="karte">Karte</button>
       <button class="nav-tab" data-tab="aufgaben">Aufgaben</button>
       <button class="nav-tab" data-tab="statistik">Statistik</button>
-      <button class="nav-tab" data-tab="handbuch">Einstellungen & Export</button>
+      <button class="nav-tab" data-tab="settings">Einstellungen & Export</button>
     </nav>
 
     <div class="header-actions">
@@ -57,17 +57,17 @@
     <!-- Global Filter Bar -->
     <div class="filter-bar" id="filter-bar">
       <div class="filter-chips">
-        <button class="filter-chip priority-high active" data-filter="high">
+        <button class="filter-chip priority-high" data-filter="high">
           <span class="priority-indicator high"></span>
           <span>Hoch</span>
           <span class="count" id="count-high">(3)</span>
         </button>
-        <button class="filter-chip priority-medium active" data-filter="medium">
+        <button class="filter-chip priority-medium" data-filter="medium">
           <span class="priority-indicator medium"></span>
           <span>Mittel</span>
           <span class="count" id="count-medium">(4)</span>
         </button>
-        <button class="filter-chip priority-low active" data-filter="low">
+        <button class="filter-chip priority-low" data-filter="low">
           <span class="priority-indicator low"></span>
           <span>Niedrig</span>
           <span class="count" id="count-low">(5)</span>
@@ -168,6 +168,11 @@
         <i data-lucide="rotate-ccw" class="icon-sm"></i>
         <span>Zurücksetzen</span>
       </button>
+
+      <div class="filter-spacer"></div>
+      <div class="filter-total" id="filter-total">
+        <span id="filtered-count">12</span> / <span id="total-count">20</span> Gebäude
+      </div>
     </div>
 
     <!-- Karte Tab -->
@@ -178,30 +183,69 @@
           <!-- Map Panel -->
           <div class="map-panel">
             <div id="map"></div>
+
+            <!-- Layer Visibility Widget -->
+            <div class="layer-widget" id="layer-widget">
+              <button class="layer-widget-trigger" id="layer-widget-trigger" title="Kartenebenen">
+                <i data-lucide="layers" class="icon"></i>
+              </button>
+              <div class="layer-widget-panel" id="layer-widget-panel">
+                <div class="layer-widget-header" title="Einklappen">
+                  <i data-lucide="layers" class="icon"></i>
+                  <span>Kartenebenen</span>
+                  <i data-lucide="chevron-up" class="icon-sm"></i>
+                </div>
+                <div class="layer-widget-content">
+                  <label class="layer-item">
+                    <input type="checkbox" id="layer-oereb" data-layer="ch.swisstopo-vd.stand-oerebkataster">
+                    <span class="layer-name">ÖREB Verfügbarkeit</span>
+                    <button class="layer-info-btn" data-layer="ch.swisstopo-vd.stand-oerebkataster" title="Layer-Info">
+                      <i data-lucide="info" class="icon-sm"></i>
+                    </button>
+                  </label>
+                  <label class="layer-item">
+                    <input type="checkbox" id="layer-gwr" data-layer="ch.bfs.gebaeude_wohnungs_register">
+                    <span class="layer-name">GWR Gebäudestatus</span>
+                    <button class="layer-info-btn" data-layer="ch.bfs.gebaeude_wohnungs_register" title="Layer-Info">
+                      <i data-lucide="info" class="icon-sm"></i>
+                    </button>
+                  </label>
+                </div>
+                <div class="layer-widget-footer">
+                  <span>© Swisstopo</span>
+                </div>
+              </div>
+            </div>
+
             <div class="basemap-selector" id="basemap-selector">
               <div class="basemap-panel" id="basemap-panel">
                 <button class="basemap-option" data-basemap="none">
-                  <div class="basemap-thumb basemap-none"></div>
-                  <span>Kein HG</span>
+                  <div class="basemap-thumb basemap-none"><span>Kein HG</span></div>
                 </button>
                 <button class="basemap-option" data-basemap="grey">
-                  <div class="basemap-thumb basemap-grey"></div>
-                  <span>Grau</span>
+                  <div class="basemap-thumb basemap-grey"><span>Grau</span></div>
                 </button>
                 <button class="basemap-option active" data-basemap="color">
-                  <div class="basemap-thumb basemap-color"></div>
-                  <span>Farbig</span>
+                  <div class="basemap-thumb basemap-color"><span>Farbig</span></div>
                 </button>
                 <button class="basemap-option" data-basemap="satellite">
-                  <div class="basemap-thumb basemap-satellite"></div>
-                  <span>Luftbild</span>
+                  <div class="basemap-thumb basemap-satellite"><span>Luftbild</span></div>
                 </button>
               </div>
               <button class="basemap-trigger" id="basemap-trigger" title="Hintergrund wechseln">
-                <div class="basemap-thumb basemap-color" id="basemap-trigger-thumb"></div>
-                <span>Hintergrund</span>
+                <div class="basemap-thumb basemap-color" id="basemap-trigger-thumb">
+                  <span id="basemap-trigger-label">Farbig</span>
+                  <i data-lucide="chevron-right" class="icon-sm trigger-chevron"></i>
+                </div>
               </button>
             </div>
+
+            <!-- Scale Bar -->
+            <div class="scale-bar" id="scale-bar">
+              <div class="scale-bar-line" id="scale-bar-line"></div>
+              <span class="scale-bar-text" id="scale-bar-text">100 m</span>
+            </div>
+
             <button class="table-toggle-btn active" id="table-toggle-btn">
               <i data-lucide="chevron-up" class="icon-sm chevron"></i>
               <span>Tabelle</span>
@@ -247,6 +291,9 @@
 
         <!-- Detail Panel -->
         <div class="detail-panel" id="detail-panel">
+          <div class="detail-resize-handle" id="detail-resize-handle">
+            <div class="resize-handle-bar-vertical"></div>
+          </div>
           <div class="detail-content" id="detail-content">
             <div class="detail-header">
               <button class="detail-close-btn" id="detail-close-btn" title="Schliessen">
@@ -304,14 +351,27 @@
               </div>
             </div>
 
-            <div class="detail-section accordion open" data-accordion="zugewiesen">
+            <div class="detail-section accordion open" data-accordion="status">
               <button class="accordion-header" type="button">
-                <span class="accordion-title">Zugewiesen</span>
+                <span class="accordion-title">Status & Zugewiesen</span>
                 <i data-lucide="chevron-down" class="icon-sm accordion-chevron"></i>
               </button>
               <div class="accordion-content">
-                <div class="assignee-display" id="assignee-display">
-                  <!-- Populated by JS -->
+                <div class="status-section">
+                  <div class="status-row">
+                    <span class="status-label">Status</span>
+                    <span class="status-badge" id="detail-status">Backlog</span>
+                  </div>
+                  <div class="status-row">
+                    <span class="status-label">Zugewiesen</span>
+                    <div class="assignee-display" id="assignee-display">
+                      <!-- Populated by JS -->
+                    </div>
+                  </div>
+                  <button class="status-action-link" id="btn-done" type="button">
+                    <i data-lucide="check-circle" class="icon-sm"></i>
+                    Als erledigt markieren
+                  </button>
                 </div>
               </div>
             </div>
@@ -334,12 +394,20 @@
                     <!-- Populated by JS -->
                   </tbody>
                 </table>
+                <div class="data-actions">
+                  <button class="data-correct-btn" id="btn-correct" type="button">
+                    <i data-lucide="edit-3" class="icon-sm"></i>
+                    Korrigieren
+                  </button>
+                  <div class="edit-actions" id="edit-actions" style="display: none;">
+                    <button class="edit-cancel-btn" id="btn-edit-cancel" type="button">Abbrechen</button>
+                    <button class="edit-save-btn" id="btn-edit-save" type="button">
+                      <i data-lucide="check" class="icon-sm"></i>
+                      Speichern
+                    </button>
+                  </div>
+                </div>
               </div>
-            </div>
-
-            <div class="detail-actions">
-              <button class="action-btn secondary" id="btn-correct">Korrigieren</button>
-              <button class="action-btn success" id="btn-done">Als erledigt markieren</button>
             </div>
 
             <div class="detail-section accordion" data-accordion="kommentare">
@@ -382,45 +450,36 @@
     <!-- Aufgaben Tab -->
     <div class="tab-content" id="tab-aufgaben">
       <div class="aufgaben-content">
-        <div class="aufgaben-header">
-          <h1 class="aufgaben-title">Aufgaben-Board</h1>
-          <div class="aufgaben-views">
-            <button class="view-btn active">Board</button>
-            <button class="view-btn">Liste</button>
-            <button class="view-btn">Meine Aufgaben</button>
-          </div>
-        </div>
-
         <div class="kanban-container">
           <div class="kanban-column">
             <div class="kanban-header">
-              <span class="kanban-header-icon"><i data-lucide="inbox" class="icon"></i></span>
-              <span class="kanban-header-title">Offen</span>
-              <span class="kanban-header-count" id="kanban-open-count">234</span>
+              <span class="kanban-header-icon"><i data-lucide="layers" class="icon"></i></span>
+              <span class="kanban-header-title">Backlog</span>
+              <span class="kanban-header-count" id="kanban-backlog-count">234</span>
             </div>
-            <div class="kanban-cards" id="kanban-open">
+            <div class="kanban-cards" id="kanban-backlog">
               <!-- Populated by JS -->
             </div>
           </div>
 
           <div class="kanban-column">
             <div class="kanban-header">
-              <span class="kanban-header-icon"><i data-lucide="user" class="icon"></i></span>
-              <span class="kanban-header-title">Zugewiesen</span>
-              <span class="kanban-header-count" id="kanban-assigned-count">89</span>
+              <span class="kanban-header-icon"><i data-lucide="play-circle" class="icon"></i></span>
+              <span class="kanban-header-title">In Arbeit</span>
+              <span class="kanban-header-count" id="kanban-inprogress-count">89</span>
             </div>
-            <div class="kanban-cards" id="kanban-assigned">
+            <div class="kanban-cards" id="kanban-inprogress">
               <!-- Populated by JS -->
             </div>
           </div>
 
           <div class="kanban-column">
             <div class="kanban-header">
-              <span class="kanban-header-icon"><i data-lucide="search" class="icon"></i></span>
-              <span class="kanban-header-title">In Prüfung</span>
-              <span class="kanban-header-count" id="kanban-review-count">34</span>
+              <span class="kanban-header-icon"><i data-lucide="help-circle" class="icon"></i></span>
+              <span class="kanban-header-title">Benötigt Abklärung</span>
+              <span class="kanban-header-count" id="kanban-clarification-count">34</span>
             </div>
-            <div class="kanban-cards" id="kanban-review">
+            <div class="kanban-cards" id="kanban-clarification">
               <!-- Populated by JS -->
             </div>
           </div>
@@ -442,82 +501,190 @@
     <!-- Statistik Tab -->
     <div class="tab-content" id="tab-statistik">
       <div class="statistik-content">
-        <div class="statistik-header">
-          <div class="statistik-period">
-            <span>Zeitraum:</span>
-            <select class="filter-dropdown">
-              <option>Letzte 30 Tage</option>
-              <option>Letzte 7 Tage</option>
-              <option>Dieses Jahr</option>
-              <option>Gesamt</option>
-            </select>
-          </div>
-          <button class="export-btn btn-icon"><i data-lucide="download" class="icon"></i> Export CSV</button>
-        </div>
-
-        <div class="stat-cards">
+        <div class="stat-cards stat-cards-6">
           <div class="stat-card">
-            <div class="stat-label">Fortschritt</div>
-            <div class="stat-value">62%</div>
-            <div class="stat-change positive">+8% ↑</div>
+            <div class="stat-label">Gebäude</div>
+            <div class="stat-value" id="stat-total">20</div>
+            <div class="stat-sublabel">Total im Filter</div>
           </div>
           <div class="stat-card">
-            <div class="stat-label">Erledigt</div>
-            <div class="stat-value">1'842</div>
-            <div class="stat-change positive">+127 ↑</div>
+            <div class="stat-label">Datenqualität</div>
+            <div class="stat-value" id="stat-quality">68%</div>
+            <div class="stat-sublabel">Ø Konfidenz</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Fehler</div>
+            <div class="stat-value error" id="stat-errors">24</div>
+            <div class="stat-sublabel">Alle Abweichungen</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Kritisch</div>
+            <div class="stat-value error" id="stat-critical">12</div>
+            <div class="stat-sublabel">Konfidenz &lt; 50%</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Validiert</div>
+            <div class="stat-value success" id="stat-validated">3</div>
+            <div class="stat-sublabel">Konfidenz ≥ 90%</div>
           </div>
           <div class="stat-card">
             <div class="stat-label">Offen</div>
-            <div class="stat-value">547</div>
-            <div class="stat-change positive">-89 ↓</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-label">Ø Bearbeitungszeit</div>
-            <div class="stat-value">3.2 Tage</div>
-            <div class="stat-change positive">-0.5d ↑</div>
+            <div class="stat-value" id="stat-pending">17</div>
+            <div class="stat-sublabel">Nicht erledigt</div>
           </div>
         </div>
 
         <div class="charts-grid">
+          <!-- Confidence Distribution -->
           <div class="chart-card">
-            <h3 class="chart-title">Gesamtfortschritt</h3>
-            <div class="progress-chart">
-              <div class="progress-bar-large">
-                <div class="progress-bar-fill" style="width: 62%"></div>
+            <h3 class="chart-title">Konfidenz-Verteilung</h3>
+            <div class="histogram-chart" id="confidence-histogram">
+              <div class="histogram-bar-group">
+                <div class="histogram-bar critical" style="height: 60%"></div>
+                <span class="histogram-label">0-40%</span>
+                <span class="histogram-value">4</span>
               </div>
-              <div class="progress-text">62%</div>
-              <div class="progress-label">1'842 / 3'000 Objekte geprüft</div>
+              <div class="histogram-bar-group">
+                <div class="histogram-bar warning" style="height: 45%"></div>
+                <span class="histogram-label">40-60%</span>
+                <span class="histogram-value">3</span>
+              </div>
+              <div class="histogram-bar-group">
+                <div class="histogram-bar moderate" style="height: 80%"></div>
+                <span class="histogram-label">60-80%</span>
+                <span class="histogram-value">10</span>
+              </div>
+              <div class="histogram-bar-group">
+                <div class="histogram-bar success" style="height: 25%"></div>
+                <span class="histogram-label">80-100%</span>
+                <span class="histogram-value">3</span>
+              </div>
             </div>
           </div>
-          <div class="chart-card error-type-chart">
-            <h3 class="chart-title">Fehler nach Typ</h3>
-            <div class="chart-row">
-              <span class="chart-row-label">Georef</span>
-              <div class="chart-row-bar">
-                <div class="chart-row-fill georef" style="width: 45%"></div>
+
+          <!-- Errors by Severity -->
+          <div class="chart-card">
+            <h3 class="chart-title">Fehler nach Schweregrad</h3>
+            <div class="severity-chart" id="severity-chart">
+              <div class="severity-bars">
+                <div class="severity-bar-row">
+                  <span class="severity-indicator error"></span>
+                  <span class="severity-label">Fehler</span>
+                  <div class="severity-bar-track">
+                    <div class="severity-bar-fill error" style="width: 60%"></div>
+                  </div>
+                  <span class="severity-value">12</span>
+                </div>
+                <div class="severity-bar-row">
+                  <span class="severity-indicator warning"></span>
+                  <span class="severity-label">Warnung</span>
+                  <div class="severity-bar-track">
+                    <div class="severity-bar-fill warning" style="width: 40%"></div>
+                  </div>
+                  <span class="severity-value">8</span>
+                </div>
+                <div class="severity-bar-row">
+                  <span class="severity-indicator info"></span>
+                  <span class="severity-label">Hinweis</span>
+                  <div class="severity-bar-track">
+                    <div class="severity-bar-fill info" style="width: 20%"></div>
+                  </div>
+                  <span class="severity-value">4</span>
+                </div>
               </div>
-              <span class="chart-row-value">234</span>
             </div>
-            <div class="chart-row">
-              <span class="chart-row-label">GWR</span>
-              <div class="chart-row-bar">
-                <div class="chart-row-fill gwr" style="width: 30%"></div>
+          </div>
+
+          <!-- Errors by Source -->
+          <div class="chart-card">
+            <h3 class="chart-title">Abweichungen nach Quelle</h3>
+            <div class="source-chart" id="source-chart">
+              <div class="chart-row">
+                <span class="chart-row-label">Georef</span>
+                <div class="chart-row-bar">
+                  <div class="chart-row-fill georef" style="width: 70%"></div>
+                </div>
+                <span class="chart-row-value">14</span>
               </div>
-              <span class="chart-row-value">156</span>
+              <div class="chart-row">
+                <span class="chart-row-label">GWR</span>
+                <div class="chart-row-bar">
+                  <div class="chart-row-fill gwr" style="width: 40%"></div>
+                </div>
+                <span class="chart-row-value">8</span>
+              </div>
+              <div class="chart-row">
+                <span class="chart-row-label">SAP</span>
+                <div class="chart-row-bar">
+                  <div class="chart-row-fill sap" style="width: 55%"></div>
+                </div>
+                <span class="chart-row-value">11</span>
+              </div>
+              <div class="chart-row">
+                <span class="chart-row-label">Adresse</span>
+                <div class="chart-row-bar">
+                  <div class="chart-row-fill address" style="width: 25%"></div>
+                </div>
+                <span class="chart-row-value">5</span>
+              </div>
             </div>
-            <div class="chart-row">
-              <span class="chart-row-label">SAP</span>
-              <div class="chart-row-bar">
-                <div class="chart-row-fill sap" style="width: 17%"></div>
+          </div>
+
+          <!-- Status by Canton -->
+          <div class="chart-card">
+            <h3 class="chart-title">Status nach Kanton</h3>
+            <div class="kanton-chart" id="kanton-chart">
+              <div class="kanton-row">
+                <span class="kanton-label">ZH</span>
+                <div class="kanton-bar-track">
+                  <div class="kanton-bar-fill" style="width: 85%"></div>
+                </div>
+                <span class="kanton-value">85%</span>
               </div>
-              <span class="chart-row-value">89</span>
+              <div class="kanton-row">
+                <span class="kanton-label">BE</span>
+                <div class="kanton-bar-track">
+                  <div class="kanton-bar-fill" style="width: 72%"></div>
+                </div>
+                <span class="kanton-value">72%</span>
+              </div>
+              <div class="kanton-row">
+                <span class="kanton-label">SG</span>
+                <div class="kanton-bar-track">
+                  <div class="kanton-bar-fill" style="width: 68%"></div>
+                </div>
+                <span class="kanton-value">68%</span>
+              </div>
+              <div class="kanton-row">
+                <span class="kanton-label">LU</span>
+                <div class="kanton-bar-track">
+                  <div class="kanton-bar-fill" style="width: 55%"></div>
+                </div>
+                <span class="kanton-value">55%</span>
+              </div>
+              <div class="kanton-row">
+                <span class="kanton-label">GR</span>
+                <div class="kanton-bar-track">
+                  <div class="kanton-bar-fill" style="width: 42%"></div>
+                </div>
+                <span class="kanton-value">42%</span>
+              </div>
             </div>
-            <div class="chart-row">
-              <span class="chart-row-label">Adresse</span>
-              <div class="chart-row-bar">
-                <div class="chart-row-fill address" style="width: 9%"></div>
-              </div>
-              <span class="chart-row-value">45</span>
+          </div>
+
+          <!-- Tasks per Assignee -->
+          <div class="chart-card">
+            <h3 class="chart-title">Aufgaben pro Bearbeiter</h3>
+            <div class="assignee-chart" id="assignee-chart">
+              <!-- Will be populated dynamically -->
+            </div>
+          </div>
+
+          <!-- Status by Portfolio -->
+          <div class="chart-card">
+            <h3 class="chart-title">Status nach Portfolio</h3>
+            <div class="portfolio-chart" id="portfolio-chart">
+              <!-- Will be populated dynamically -->
             </div>
           </div>
         </div>
@@ -525,199 +692,135 @@
     </div>
 
     <!-- Einstellungen & Export Tab -->
-    <div class="tab-content" id="tab-handbuch">
-      <div class="handbuch-content">
+    <div class="tab-content" id="tab-settings">
+      <div class="settings-content">
         <!-- User Management Section -->
-        <div class="handbuch-section">
-          <h2 class="handbuch-section-title section-title-icon"><i data-lucide="users" class="icon-lg"></i> Benutzerverwaltung</h2>
-          <div class="user-management">
-            <div class="user-actions">
-              <button class="action-btn primary" onclick="openModal('modal-invite-user')">
-                <i data-lucide="user-plus" class="icon-sm"></i>
-                Benutzer einladen
-              </button>
-            </div>
-            <table class="users-table">
-              <thead>
-                <tr>
-                  <th>Benutzer</th>
-                  <th>Rolle</th>
-                  <th>Status</th>
-                  <th>Aktionen</th>
-                </tr>
-              </thead>
-              <tbody id="users-table-body">
-                <tr>
-                  <td>
-                    <div class="user-cell">
-                      <div class="user-avatar">MK</div>
-                      <div class="user-details">
-                        <span class="user-name">M. Keller</span>
-                        <span class="user-email">m.keller@bbl.admin.ch</span>
-                      </div>
-                    </div>
-                  </td>
-                  <td><span class="badge badge-ok">Admin</span></td>
-                  <td><span class="status-indicator active">Aktiv</span></td>
-                  <td><button class="icon-btn" title="Bearbeiten"><i data-lucide="pencil" class="icon-sm"></i></button></td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="user-cell">
-                      <div class="user-avatar">SB</div>
-                      <div class="user-details">
-                        <span class="user-name">S. Brunner</span>
-                        <span class="user-email">s.brunner@bbl.admin.ch</span>
-                      </div>
-                    </div>
-                  </td>
-                  <td><span class="badge badge-warning">Bearbeiter</span></td>
-                  <td><span class="status-indicator active">Aktiv</span></td>
-                  <td>
-                    <button class="icon-btn" title="Bearbeiten"><i data-lucide="pencil" class="icon-sm"></i></button>
-                    <button class="icon-btn danger" title="Entfernen"><i data-lucide="trash-2" class="icon-sm"></i></button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="user-cell">
-                      <div class="user-avatar">TW</div>
-                      <div class="user-details">
-                        <span class="user-name">T. Weber</span>
-                        <span class="user-email">t.weber@bbl.admin.ch</span>
-                      </div>
-                    </div>
-                  </td>
-                  <td><span class="badge badge-warning">Bearbeiter</span></td>
-                  <td><span class="status-indicator active">Aktiv</span></td>
-                  <td>
-                    <button class="icon-btn" title="Bearbeiten"><i data-lucide="pencil" class="icon-sm"></i></button>
-                    <button class="icon-btn danger" title="Entfernen"><i data-lucide="trash-2" class="icon-sm"></i></button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="user-cell">
-                      <div class="user-avatar">AM</div>
-                      <div class="user-details">
-                        <span class="user-name">A. Meier</span>
-                        <span class="user-email">a.meier@bbl.admin.ch</span>
-                      </div>
-                    </div>
-                  </td>
-                  <td><span class="badge badge-georef">Leser</span></td>
-                  <td><span class="status-indicator pending">Eingeladen</span></td>
-                  <td>
-                    <button class="icon-btn" title="Erneut einladen"><i data-lucide="mail" class="icon-sm"></i></button>
-                    <button class="icon-btn danger" title="Entfernen"><i data-lucide="trash-2" class="icon-sm"></i></button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+        <div class="settings-section">
+          <div class="section-header-with-action">
+            <h2 class="settings-section-title section-title-icon"><i data-lucide="users" class="icon-lg"></i> Benutzerverwaltung</h2>
+            <button class="action-btn primary btn-sm" onclick="openModal('modal-invite-user')">
+              <i data-lucide="user-plus" class="icon-sm"></i>
+              Einladen
+            </button>
           </div>
-        </div>
-
-        <!-- Export Section -->
-        <div class="handbuch-section">
-          <h2 class="handbuch-section-title section-title-icon"><i data-lucide="download" class="icon-lg"></i> Export</h2>
-          <table class="downloads-table">
-            <tr>
-              <td class="download-name">Checkliste Vor-Ort-Prüfung</td>
-              <td><span class="download-type pdf">PDF</span></td>
-              <td><button class="download-btn">Download</button></td>
-            </tr>
-            <tr>
-              <td class="download-name">Excel-Vorlage Massenkorrektur</td>
-              <td><span class="download-type xlsx">XLSX</span></td>
-              <td><button class="download-btn">Download</button></td>
-            </tr>
-            <tr>
-              <td class="download-name">Aktueller Fehlerbericht</td>
-              <td><span class="download-type csv">CSV</span></td>
-              <td><button class="download-btn">Download</button></td>
-            </tr>
-            <tr>
-              <td class="download-name">Meine offenen Aufgaben</td>
-              <td><span class="download-type pdf">PDF</span></td>
-              <td><button class="download-btn">Download</button></td>
-            </tr>
+          <table class="users-table">
+            <thead>
+              <tr>
+                <th>Benutzer</th>
+                <th>Rolle</th>
+                <th>Status</th>
+                <th>Aktionen</th>
+              </tr>
+            </thead>
+            <tbody id="users-table-body">
+              <tr>
+                <td>
+                  <div class="user-cell">
+                    <div class="user-avatar">MK</div>
+                    <div class="user-details">
+                      <span class="user-name">M. Keller</span>
+                      <span class="user-email">m.keller@bbl.admin.ch</span>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="badge badge-ok">Admin</span></td>
+                <td><span class="status-indicator active">Aktiv</span></td>
+                <td><button class="icon-btn" title="Bearbeiten"><i data-lucide="pencil" class="icon-sm"></i></button></td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="user-cell">
+                    <div class="user-avatar">SB</div>
+                    <div class="user-details">
+                      <span class="user-name">S. Brunner</span>
+                      <span class="user-email">s.brunner@bbl.admin.ch</span>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="badge badge-warning">Bearbeiter</span></td>
+                <td><span class="status-indicator active">Aktiv</span></td>
+                <td>
+                  <button class="icon-btn" title="Bearbeiten"><i data-lucide="pencil" class="icon-sm"></i></button>
+                  <button class="icon-btn danger" title="Entfernen"><i data-lucide="trash-2" class="icon-sm"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="user-cell">
+                    <div class="user-avatar">TW</div>
+                    <div class="user-details">
+                      <span class="user-name">T. Weber</span>
+                      <span class="user-email">t.weber@bbl.admin.ch</span>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="badge badge-warning">Bearbeiter</span></td>
+                <td><span class="status-indicator active">Aktiv</span></td>
+                <td>
+                  <button class="icon-btn" title="Bearbeiten"><i data-lucide="pencil" class="icon-sm"></i></button>
+                  <button class="icon-btn danger" title="Entfernen"><i data-lucide="trash-2" class="icon-sm"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="user-cell">
+                    <div class="user-avatar">AM</div>
+                    <div class="user-details">
+                      <span class="user-name">A. Meier</span>
+                      <span class="user-email">a.meier@bbl.admin.ch</span>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="badge badge-georef">Leser</span></td>
+                <td><span class="status-indicator pending">Eingeladen</span></td>
+                <td>
+                  <button class="icon-btn" title="Erneut einladen"><i data-lucide="mail" class="icon-sm"></i></button>
+                  <button class="icon-btn danger" title="Entfernen"><i data-lucide="trash-2" class="icon-sm"></i></button>
+                </td>
+              </tr>
+            </tbody>
           </table>
         </div>
 
-        <div class="handbuch-section">
-          <h2 class="handbuch-section-title section-title-icon"><i data-lucide="external-link" class="icon-lg"></i> Externe Ressourcen</h2>
-          <ul class="external-links">
-            <li class="external-link">
-              <a href="#">• GWR Dokumentation (BFS) ↗</a>
-            </li>
-            <li class="external-link">
-              <a href="#">• SAP RE-FX Handbuch (intern) ↗</a>
-            </li>
-            <li class="external-link">
-              <a href="#">• swisstopo Koordinatensysteme ↗</a>
-            </li>
-          </ul>
+        <!-- Export Section -->
+        <div class="settings-section">
+          <h2 class="settings-section-title section-title-icon"><i data-lucide="download" class="icon-lg"></i> Export</h2>
+          <div class="export-buttons">
+            <button class="export-btn"><i data-lucide="download" class="icon-sm"></i> Checkliste Vor-Ort <span class="export-type">PDF</span></button>
+            <button class="export-btn"><i data-lucide="download" class="icon-sm"></i> Excel Massenkorrektur <span class="export-type">XLSX</span></button>
+            <button class="export-btn"><i data-lucide="download" class="icon-sm"></i> Fehlerbericht <span class="export-type">CSV</span></button>
+            <button class="export-btn"><i data-lucide="download" class="icon-sm"></i> Meine Aufgaben <span class="export-type">PDF</span></button>
+          </div>
+        </div>
+
+        <!-- Checking Rules Section -->
+        <div class="settings-section">
+          <div class="section-header-with-action">
+            <h2 class="settings-section-title section-title-icon"><i data-lucide="shield-check" class="icon-lg"></i> Prüfregeln</h2>
+            <button class="action-btn primary btn-sm" id="run-all-checks">
+              <i data-lucide="play" class="icon-sm"></i>
+              Prüfung starten
+            </button>
+          </div>
+          <p class="section-description">Diese Regeln werden automatisch auf alle Gebäude angewendet.</p>
+          <div class="rules-container" id="rules-container">
+            <div class="rules-loading">Regeln werden geladen...</div>
+          </div>
         </div>
       </div>
     </div>
   </main>
 
-  <!-- Correction Modal -->
-  <div class="modal-overlay" id="modal-correct">
-    <div class="modal wide">
-      <div class="modal-header">
-        <h3 class="modal-title">Daten korrigieren</h3>
-        <button class="modal-close" onclick="closeModal('modal-correct')">×</button>
-      </div>
-      <div class="modal-body">
-        <div class="correction-compare">
-          <div class="correction-source">
-            <div class="correction-source-title">SAP RE-FX (Quelle)</div>
-            <div class="correction-source-row">
-              <span class="correction-source-label">Koordinaten:</span>
-              <span class="mismatch">Fehlt</span>
-            </div>
-            <div class="correction-source-row">
-              <span class="correction-source-label">Adresse:</span>
-              <span>Friedrichshafnerstr.</span>
-            </div>
-            <div class="correction-source-row">
-              <span class="correction-source-label">Baujahr:</span>
-              <span>1965</span>
-            </div>
-          </div>
-          <div class="correction-source">
-            <div class="correction-source-title">GWR (Referenz)</div>
-            <div class="correction-source-row">
-              <span class="correction-source-label">Koordinaten:</span>
-              <span class="match">✓ Vorhanden</span>
-            </div>
-            <div class="correction-source-row">
-              <span class="correction-source-label">Adresse:</span>
-              <span>Friedrichshafnerstr.</span>
-            </div>
-            <div class="correction-source-row">
-              <span class="correction-source-label">Baujahr:</span>
-              <span>1967</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="correction-suggestion">
-          <div class="correction-suggestion-title section-title-icon"><i data-lucide="lightbulb" class="icon"></i> Vorgeschlagene Aktion</div>
-          <p class="correction-suggestion-text">Koordinaten aus GWR übernehmen nach SAP RE-FX</p>
-          <button class="correction-apply-btn">Koordinaten übernehmen</button>
-        </div>
-
-        <label class="modal-label">Kommentar zur Korrektur:</label>
-        <textarea class="modal-textarea" placeholder="Begründung der Korrektur..."></textarea>
-      </div>
-      <div class="modal-footer">
-        <button class="modal-btn cancel" onclick="closeModal('modal-correct')">Abbrechen</button>
-        <button class="modal-btn primary">Korrektur speichern</button>
-      </div>
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-links">
+      <a href="mailto:dres@bbl.admin.ch">Kontakt</a>
+      <a href="https://www.admin.ch/gov/de/start/rechtliches.html" target="_blank" rel="noopener">Rechtliches</a>
+      <a href="https://github.com/davras5/geo-check" target="_blank" rel="noopener">Quellcode</a>
+      <a href="#" class="footer-link-placeholder">API</a>
     </div>
-  </div>
+    <div class="footer-version">v0.1.0</div>
+  </footer>
 
   <!-- Invite User Modal -->
   <div class="modal-overlay" id="modal-invite-user">
@@ -766,6 +869,19 @@
       <i data-lucide="map-pin" class="icon-sm"></i>
       <span>Nächstes Objekt</span>
     </div>
+    <div class="context-menu-divider"></div>
+    <div class="context-menu-item" id="context-menu-google-maps">
+      <i data-lucide="map" class="icon-sm"></i>
+      <span>In Google Maps öffnen</span>
+    </div>
+    <div class="context-menu-item" id="context-menu-swisstopo">
+      <i data-lucide="mountain" class="icon-sm"></i>
+      <span>In Swisstopo öffnen</span>
+    </div>
+    <div class="context-menu-item" id="context-menu-google-earth">
+      <i data-lucide="globe" class="icon-sm"></i>
+      <span>In Google Earth 3D öffnen</span>
+    </div>
   </div>
 
   <!-- Leaflet JS -->
@@ -780,26 +896,32 @@
     let events = [];
     let errors = {};
     let comments = {};
+    let rulesConfig = null;
 
     async function loadData() {
       try {
-        const [buildingsResponse, teamResponse, eventsResponse, errorsResponse, commentsResponse] = await Promise.all([
+        const [buildingsResponse, usersResponse, eventsResponse, errorsResponse, commentsResponse, rulesResponse] = await Promise.all([
           fetch('data/buildings.json'),
-          fetch('data/team.json'),
+          fetch('data/users.json'),
           fetch('data/events.json'),
           fetch('data/errors.json'),
-          fetch('data/comments.json')
+          fetch('data/comments.json'),
+          fetch('data/rules.json')
         ]);
 
-        if (!buildingsResponse.ok || !teamResponse.ok || !eventsResponse.ok || !errorsResponse.ok || !commentsResponse.ok) {
+        if (!buildingsResponse.ok || !usersResponse.ok || !eventsResponse.ok || !errorsResponse.ok || !commentsResponse.ok) {
           throw new Error('Failed to load data files');
         }
 
         buildings = await buildingsResponse.json();
-        teamMembers = await teamResponse.json();
+        teamMembers = await usersResponse.json();
         events = await eventsResponse.json();
         errors = await errorsResponse.json();
         comments = await commentsResponse.json();
+
+        if (rulesResponse.ok) {
+          rulesConfig = await rulesResponse.json();
+        }
 
         // Merge errors and comments into buildings
         buildings.forEach(building => {
@@ -828,20 +950,54 @@
     let state = {
       selectedBuildingId: null,
       activeFilters: {
-        high: true,
-        medium: true,
-        low: true,
+        high: false,
+        medium: false,
+        low: false,
         myTasks: false
       },
       filterKanton: [],      // Empty array = show all
       filterConfidence: [],  // Empty array = show all
       filterPortfolio: [],   // Empty array = show all
       filterAssignee: [],    // Empty array = show all
-      currentTab: 'karte'
+      currentTab: 'karte',
+      // Edit mode state
+      editMode: false,
+      originalBuildingData: null,  // Backup for cancel
+      editedCoords: null           // Track dragged marker position
     };
 
     let map;
     let markers = {};
+
+    // ========================================
+    // Coordinate Conversion (WGS84 to LV95)
+    // ========================================
+    function wgs84ToLV95(lat, lng) {
+      // Convert decimal degrees to sexagesimal seconds
+      const latSec = lat * 3600;
+      const lngSec = lng * 3600;
+
+      // Auxiliary values (Bern as origin)
+      const latAux = (latSec - 169028.66) / 10000;
+      const lngAux = (lngSec - 26782.5) / 10000;
+
+      // Easting (E)
+      const E = 2600072.37
+        + 211455.93 * lngAux
+        - 10938.51 * lngAux * latAux
+        - 0.36 * lngAux * latAux * latAux
+        - 44.54 * lngAux * lngAux * lngAux;
+
+      // Northing (N)
+      const N = 1200147.07
+        + 308807.95 * latAux
+        + 3745.25 * lngAux * lngAux
+        + 76.63 * latAux * latAux
+        - 194.56 * lngAux * lngAux * latAux
+        + 119.79 * latAux * latAux * latAux;
+
+      return { E: Math.round(E), N: Math.round(N) };
+    }
 
     // ========================================
     // URL Navigation
@@ -858,7 +1014,7 @@
       }
 
       // Add active filters (only non-default values)
-      const defaultFilters = { high: true, medium: true, low: true, myTasks: false };
+      const defaultFilters = { high: false, medium: false, low: false, myTasks: false };
       const filterDiff = [];
       Object.entries(state.activeFilters).forEach(([key, value]) => {
         if (value !== defaultFilters[key]) {
@@ -892,7 +1048,7 @@
 
       // Parse tab
       const tab = params.get('tab');
-      if (tab && ['karte', 'aufgaben', 'statistik', 'handbuch'].includes(tab)) {
+      if (tab && ['karte', 'aufgaben', 'statistik', 'settings'].includes(tab)) {
         state.currentTab = tab;
       }
 
@@ -974,7 +1130,7 @@
         // Restore state from history
         state.currentTab = event.state.currentTab || 'karte';
         state.selectedBuildingId = event.state.selectedBuildingId || null;
-        state.activeFilters = event.state.activeFilters || { high: true, medium: true, low: true, myTasks: false };
+        state.activeFilters = event.state.activeFilters || { high: false, medium: false, low: false, myTasks: false };
         state.filterKanton = event.state.filterKanton || [];
         state.filterConfidence = event.state.filterConfidence || [];
         state.filterPortfolio = event.state.filterPortfolio || [];
@@ -1026,12 +1182,13 @@
               const markerBuilding = buildings.find(b => b.id === markerId);
               marker.setIcon(L.divIcon({
                 className: 'custom-marker-container',
-                html: `<div class="custom-marker ${markerBuilding.priority} ${isSelected ? 'selected' : ''}" data-id="${markerId}"></div>`,
+                html: `<div class="custom-marker ${markerBuilding.priority} ${isSelected ? 'selected' : ''}" data-id="${markerId}"></div>
+                       <span class="marker-label">${markerId}</span>`,
                 iconSize: isSelected ? [24, 24] : [16, 16],
                 iconAnchor: isSelected ? [12, 12] : [8, 8]
               }));
             });
-            map.setView([building.lat, building.lng], 12);
+            map.setView([building.lat, building.lng], 18);
             renderDetailPanel(building);
           }
         } else {
@@ -1063,15 +1220,22 @@
       applyURLState();
 
       renderKanbanBoard();
+      setupKanbanDragDrop();
+      renderRules();
       setupEventListeners();
       setupTableViewListeners();
       setupExpandingSearch();
       setupFilterToggle();
       setupTableResize();
+      setupDetailPanelResize();
       setupBasemapSelector();
+      setupLayerWidget();
+      setupLayerIdentify();
       setupContextMenu();
       setupAccordions();
+      setupRunChecksButton();
       updateCounts();
+      updateStatistik();
 
       // Apply building selection from URL after rendering
       if (state.selectedBuildingId) {
@@ -1089,7 +1253,17 @@
       map = L.map('map', { zoomControl: false }).setView([47.0, 8.3], 8);
 
       // Add zoom control to top-right
-      L.control.zoom({ position: 'topright' }).addTo(map);
+      const zoomControl = L.control.zoom({ position: 'topright' }).addTo(map);
+
+      // Add home button to the zoom control's container
+      const homeBtn = L.DomUtil.create('a', 'leaflet-control-home', zoomControl.getContainer());
+      homeBtn.href = '#';
+      homeBtn.title = 'Auf aktive Gebäude zoomen';
+      homeBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>';
+      L.DomEvent.on(homeBtn, 'click', function(e) {
+        L.DomEvent.stop(e);
+        zoomToVisibleMarkers();
+      });
 
       // Initialize with default basemap (color)
       switchBasemapTiles(currentBasemap);
@@ -1098,18 +1272,64 @@
         const marker = createMarker(building);
         markers[building.id] = marker;
         marker.addTo(map);
+        // Disable dragging by default (needs to be done after adding to map)
+        if (marker.dragging) marker.dragging.disable();
       });
+
+      // Show/hide marker labels based on zoom level
+      const mapContainer = document.getElementById('map');
+      function updateLabelVisibility() {
+        const zoom = map.getZoom();
+        mapContainer.classList.toggle('show-labels', zoom >= 15);
+      }
+      map.on('zoomend', updateLabelVisibility);
+      updateLabelVisibility();
+
+      // Scale bar
+      const scaleBarLine = document.getElementById('scale-bar-line');
+      const scaleBarText = document.getElementById('scale-bar-text');
+      function updateScaleBar() {
+        const center = map.getCenter();
+        const zoom = map.getZoom();
+        // Meters per pixel at this latitude and zoom
+        const metersPerPixel = 156543.03392 * Math.cos(center.lat * Math.PI / 180) / Math.pow(2, zoom);
+        // Find a nice round distance that fits ~80-150px
+        const distances = [1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000];
+        let distance = distances[0];
+        for (const d of distances) {
+          const px = d / metersPerPixel;
+          if (px >= 60 && px <= 150) { distance = d; break; }
+          if (px < 60) distance = d;
+        }
+        const widthPx = Math.round(distance / metersPerPixel);
+        scaleBarLine.style.width = widthPx + 'px';
+        scaleBarText.textContent = distance >= 1000 ? (distance / 1000) + ' km' : distance + ' m';
+      }
+      map.on('zoomend', updateScaleBar);
+      map.on('moveend', updateScaleBar);
+      updateScaleBar();
+    }
+
+    function zoomToVisibleMarkers() {
+      const filtered = getFilteredBuildings();
+      if (filtered.length === 0) return;
+
+      const bounds = L.latLngBounds(filtered.map(b => [b.lat, b.lng]));
+      map.fitBounds(bounds, { padding: [50, 50] });
     }
 
     function createMarker(building) {
       const icon = L.divIcon({
         className: 'custom-marker-container',
-        html: `<div class="custom-marker ${building.priority}" data-id="${building.id}"></div>`,
+        html: `<div class="custom-marker ${building.priority}" data-id="${building.id}"></div>
+               <span class="marker-label">${building.id}</span>`,
         iconSize: [16, 16],
         iconAnchor: [8, 8]
       });
 
-      const marker = L.marker([building.lat, building.lng], { icon });
+      // Create with draggable: true so dragging handler is available
+      // It will be disabled immediately after adding to map
+      const marker = L.marker([building.lat, building.lng], { icon, draggable: true });
       marker.on('click', () => selectBuilding(building.id));
       return marker;
     }
@@ -1180,13 +1400,7 @@
       }
 
       // Data comparison
-      document.getElementById('data-comparison').innerHTML = Object.entries(building.data).map(([key, val]) => `
-        <tr>
-          <td>${getDataLabel(key)}</td>
-          <td class="${val.match ? 'match' : (val.sap === 'Fehlt' || val.sap === '—' ? 'missing' : 'mismatch')}">${val.sap}</td>
-          <td class="${val.match ? 'match' : (val.gwr === '—' ? 'missing' : 'mismatch')}">${val.gwr}</td>
-        </tr>
-      `).join('');
+      renderDataComparison(building);
 
       // Comments
       document.getElementById('comments-list').innerHTML = building.comments.length > 0
@@ -1210,6 +1424,23 @@
         commentsCountEl.style.display = 'none';
       }
 
+      // Status
+      const statusEl = document.getElementById('detail-status');
+      const statusLabels = {
+        'backlog': 'Backlog',
+        'inprogress': 'In Bearbeitung',
+        'clarification': 'Klärung',
+        'done': 'Erledigt'
+      };
+      const statusClasses = {
+        'backlog': 'status-backlog',
+        'inprogress': 'status-inprogress',
+        'clarification': 'status-clarification',
+        'done': 'status-done'
+      };
+      statusEl.textContent = statusLabels[building.kanbanStatus] || building.kanbanStatus;
+      statusEl.className = 'status-badge ' + (statusClasses[building.kanbanStatus] || '');
+
       // Assignee
       renderAssigneeDisplay(building);
 
@@ -1217,6 +1448,209 @@
       renderEventsLog(building.id);
 
       // Refresh Lucide icons
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+
+      // Update edit button state
+      updateEditButton();
+    }
+
+    function renderDataComparison(building) {
+      const container = document.getElementById('data-comparison');
+      const isEditMode = state.editMode;
+
+      // Get current coords (may be edited)
+      const currentLat = state.editedCoords ? state.editedCoords.lat : building.lat;
+      const currentLng = state.editedCoords ? state.editedCoords.lng : building.lng;
+      const sapCoords = `${currentLat.toFixed(4)}, ${currentLng.toFixed(4)}`;
+
+      container.innerHTML = Object.entries(building.data).map(([key, val]) => {
+        const isCoords = key === 'coords';
+        const sapValue = isCoords ? sapCoords : val.sap;
+        const gwrValue = val.gwr;
+
+        if (isEditMode) {
+          // Edit mode rendering
+          if (isCoords) {
+            // Coordinates - read-only but shows live position, with map hint
+            return `
+              <tr class="edit-row">
+                <td>${getDataLabel(key)}</td>
+                <td class="edit-cell coords-cell">
+                  <span class="coords-value" id="edit-coords-display">${sapValue}</span>
+                  <span class="coords-hint"><i data-lucide="move" class="icon-xs"></i> Punkt verschieben</span>
+                </td>
+                <td class="gwr-locked">${gwrValue}</td>
+              </tr>
+            `;
+          } else {
+            // Regular editable field
+            return `
+              <tr class="edit-row">
+                <td>${getDataLabel(key)}</td>
+                <td class="edit-cell">
+                  <input type="text" class="edit-input" data-field="${key}" value="${sapValue === '—' || sapValue === 'Fehlt' ? '' : sapValue}" placeholder="${gwrValue !== '—' ? gwrValue : ''}">
+                </td>
+                <td class="gwr-locked">${gwrValue}</td>
+              </tr>
+            `;
+          }
+        } else {
+          // View mode rendering (original)
+          return `
+            <tr>
+              <td>${getDataLabel(key)}</td>
+              <td class="${val.match ? 'match' : (val.sap === 'Fehlt' || val.sap === '—' ? 'missing' : 'mismatch')}">${val.sap}</td>
+              <td class="${val.match ? 'match' : (gwrValue === '—' ? 'missing' : 'mismatch')}">${gwrValue}</td>
+            </tr>
+          `;
+        }
+      }).join('');
+
+      // Update button section
+      updateEditButton();
+    }
+
+    function updateEditButton() {
+      const btnCorrect = document.getElementById('btn-correct');
+      const editActionsContainer = document.getElementById('edit-actions');
+
+      if (state.editMode) {
+        btnCorrect.style.display = 'none';
+        if (editActionsContainer) {
+          editActionsContainer.style.display = 'flex';
+        }
+      } else {
+        btnCorrect.style.display = 'flex';
+        if (editActionsContainer) {
+          editActionsContainer.style.display = 'none';
+        }
+      }
+    }
+
+    function enterEditMode() {
+      if (!state.selectedBuildingId) return;
+      const building = buildings.find(b => b.id === state.selectedBuildingId);
+      if (!building) return;
+
+      // Store original data for cancel
+      state.originalBuildingData = JSON.parse(JSON.stringify(building.data));
+      state.editedCoords = { lat: building.lat, lng: building.lng };
+      state.editMode = true;
+
+      // Make marker draggable (Leaflet API)
+      const marker = markers[building.id];
+      if (marker) {
+        // Enable dragging on Leaflet marker
+        if (marker.dragging) {
+          marker.dragging.enable();
+        }
+        // Add draggable class to marker icon
+        if (marker._icon) {
+          marker._icon.classList.add('draggable');
+        }
+
+        // Add drag event listener
+        marker.on('drag', (e) => {
+          const latLng = e.target.getLatLng();
+          state.editedCoords = { lat: latLng.lat, lng: latLng.lng };
+          // Update coords display in real-time
+          const coordsDisplay = document.getElementById('edit-coords-display');
+          if (coordsDisplay) {
+            coordsDisplay.textContent = `${latLng.lat.toFixed(4)}, ${latLng.lng.toFixed(4)}`;
+          }
+        });
+      }
+
+      // Re-render data comparison in edit mode
+      renderDataComparison(building);
+
+      // Add edit mode class to detail panel
+      document.getElementById('detail-panel')?.classList.add('edit-mode');
+
+      // Refresh icons for new elements
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+
+    function exitEditMode(save) {
+      if (!state.selectedBuildingId) return;
+      const building = buildings.find(b => b.id === state.selectedBuildingId);
+      if (!building) return;
+
+      const marker = markers[building.id];
+
+      if (save) {
+        // Collect edited values from inputs
+        document.querySelectorAll('.edit-input').forEach(input => {
+          const field = input.dataset.field;
+          const newValue = input.value.trim() || '—';
+          if (building.data[field]) {
+            building.data[field].sap = newValue;
+            // Update match status
+            building.data[field].match = newValue === building.data[field].gwr;
+          }
+        });
+
+        // Update coordinates from dragged marker
+        if (state.editedCoords) {
+          building.lat = state.editedCoords.lat;
+          building.lng = state.editedCoords.lng;
+          // Update coords in data
+          if (building.data.coords) {
+            building.data.coords.sap = `${state.editedCoords.lat.toFixed(4)}, ${state.editedCoords.lng.toFixed(4)}`;
+            // Check if matches GWR coords
+            const gwrCoords = building.data.coords.gwr;
+            if (gwrCoords && gwrCoords !== '—') {
+              const [gwrLat, gwrLng] = gwrCoords.split(',').map(s => parseFloat(s.trim()));
+              const tolerance = 0.001; // ~100m tolerance
+              building.data.coords.match =
+                Math.abs(state.editedCoords.lat - gwrLat) < tolerance &&
+                Math.abs(state.editedCoords.lng - gwrLng) < tolerance;
+            }
+          }
+        }
+
+        // Update metadata
+        building.lastUpdate = new Date().toISOString();
+        building.lastUpdateBy = 'M. Keller';
+
+        // Keep marker at new position (already there from drag)
+      } else {
+        // Cancel - restore original data
+        if (state.originalBuildingData) {
+          building.data = state.originalBuildingData;
+        }
+
+        // Reset marker to original position (Leaflet API)
+        if (marker) {
+          marker.setLatLng([building.lat, building.lng]);
+        }
+      }
+
+      // Make marker non-draggable (Leaflet API)
+      if (marker) {
+        if (marker.dragging) {
+          marker.dragging.disable();
+        }
+        if (marker._icon) {
+          marker._icon.classList.remove('draggable');
+        }
+        marker.off('drag');
+      }
+
+      // Clear edit state
+      state.editMode = false;
+      state.originalBuildingData = null;
+      state.editedCoords = null;
+
+      // Remove edit mode class
+      document.getElementById('detail-panel')?.classList.remove('edit-mode');
+
+      // Re-render everything
+      renderDataComparison(building);
+      renderBuildingsList();
+      updateStatistik();
+
+      // Refresh icons
       if (typeof lucide !== 'undefined') lucide.createIcons();
     }
 
@@ -1390,19 +1824,23 @@
     }
 
     function renderKanbanBoard() {
+      const filtered = getFilteredBuildings();
       const columns = {
-        open: buildings.filter(b => b.kanbanStatus === 'open'),
-        assigned: buildings.filter(b => b.kanbanStatus === 'assigned'),
-        review: buildings.filter(b => b.kanbanStatus === 'review'),
-        done: buildings.filter(b => b.kanbanStatus === 'done')
+        backlog: filtered.filter(b => b.kanbanStatus === 'backlog'),
+        inprogress: filtered.filter(b => b.kanbanStatus === 'inprogress'),
+        clarification: filtered.filter(b => b.kanbanStatus === 'clarification'),
+        done: filtered.filter(b => b.kanbanStatus === 'done')
       };
 
       Object.entries(columns).forEach(([status, items]) => {
         const container = document.getElementById(`kanban-${status}`);
-        const displayItems = items.slice(0, 3);
+        const displayItems = items.slice(0, 5);
 
         container.innerHTML = displayItems.map(building => `
-          <div class="kanban-card ${building.priority}" onclick="selectBuildingAndSwitch('${building.id}')">
+          <div class="kanban-card ${building.priority}"
+               draggable="true"
+               data-building-id="${building.id}"
+               data-status="${status}">
             <div class="kanban-card-name">${building.name}</div>
             <div class="kanban-card-sap-id">${building.id}</div>
             <div class="badge-group">
@@ -1415,8 +1853,8 @@
           </div>
         `).join('');
 
-        if (items.length > 3) {
-          container.innerHTML += `<div class="kanban-more">+${items.length - 3} mehr</div>`;
+        if (items.length > 5) {
+          container.innerHTML += `<div class="kanban-more">+${items.length - 5} mehr</div>`;
         }
 
         document.getElementById(`kanban-${status}-count`).textContent = items.length;
@@ -1424,6 +1862,111 @@
 
       // Re-initialize Lucide icons for dynamically added content
       if (typeof lucide !== 'undefined') lucide.createIcons();
+
+      // Setup drag and drop handlers for cards
+      setupKanbanCardHandlers();
+    }
+
+    // ========================================
+    // Kanban Drag and Drop
+    // ========================================
+    let draggedCard = null;
+    let draggedBuildingId = null;
+
+    function setupKanbanDragDrop() {
+      const columns = document.querySelectorAll('.kanban-cards');
+
+      columns.forEach(column => {
+        column.addEventListener('dragover', handleDragOver);
+        column.addEventListener('dragenter', handleDragEnter);
+        column.addEventListener('dragleave', handleDragLeave);
+        column.addEventListener('drop', handleDrop);
+      });
+    }
+
+    function setupKanbanCardHandlers() {
+      const cards = document.querySelectorAll('.kanban-card[draggable="true"]');
+
+      cards.forEach(card => {
+        card.addEventListener('dragstart', handleDragStart);
+        card.addEventListener('dragend', handleDragEnd);
+        card.addEventListener('click', (e) => {
+          // Only trigger click if not dragging
+          if (!card.classList.contains('dragging')) {
+            selectBuildingAndSwitch(card.dataset.buildingId);
+          }
+        });
+      });
+    }
+
+    function handleDragStart(e) {
+      draggedCard = e.target;
+      draggedBuildingId = e.target.dataset.buildingId;
+      e.target.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/plain', draggedBuildingId);
+
+      // Add visual feedback to valid drop targets
+      document.querySelectorAll('.kanban-cards').forEach(col => {
+        col.classList.add('drop-target');
+      });
+    }
+
+    function handleDragEnd(e) {
+      e.target.classList.remove('dragging');
+      draggedCard = null;
+      draggedBuildingId = null;
+
+      // Remove drop target styling
+      document.querySelectorAll('.kanban-cards').forEach(col => {
+        col.classList.remove('drop-target', 'drag-over');
+      });
+    }
+
+    function handleDragOver(e) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+    }
+
+    function handleDragEnter(e) {
+      e.preventDefault();
+      const column = e.target.closest('.kanban-cards');
+      if (column) {
+        column.classList.add('drag-over');
+      }
+    }
+
+    function handleDragLeave(e) {
+      const column = e.target.closest('.kanban-cards');
+      if (column && !column.contains(e.relatedTarget)) {
+        column.classList.remove('drag-over');
+      }
+    }
+
+    function handleDrop(e) {
+      e.preventDefault();
+      const column = e.target.closest('.kanban-cards');
+      if (!column || !draggedBuildingId) return;
+
+      // Get the new status from the column ID
+      const newStatus = column.id.replace('kanban-', '');
+
+      // Find the building and update its status
+      const building = buildings.find(b => b.id === draggedBuildingId);
+      if (building && building.kanbanStatus !== newStatus) {
+        building.kanbanStatus = newStatus;
+        building.lastUpdate = new Date().toISOString();
+        building.lastUpdateBy = 'M. Keller'; // Current user
+
+        // Re-render the kanban board
+        renderKanbanBoard();
+
+        // Update the map markers and table if visible
+        renderMarkers();
+        renderTable();
+      }
+
+      column.classList.remove('drag-over');
     }
 
     // ========================================
@@ -1437,6 +1980,10 @@
 
       // Detail panel close button
       document.getElementById('detail-close-btn').addEventListener('click', () => {
+        // Exit edit mode if active
+        if (state.editMode) {
+          exitEditMode(false);
+        }
         state.selectedBuildingId = null;
         renderDetailPanel(null);
         // Deselect marker
@@ -1460,8 +2007,38 @@
         btn.addEventListener('click', () => switchBasemap(btn.dataset.basemap));
       });
 
-      // Action buttons
-      document.getElementById('btn-correct').addEventListener('click', () => openModal('modal-correct'));
+      // Correct button - enters edit mode
+      document.getElementById('btn-correct').addEventListener('click', () => {
+        enterEditMode();
+      });
+
+      // Edit cancel button
+      document.getElementById('btn-edit-cancel').addEventListener('click', () => {
+        exitEditMode(false); // false = don't save
+      });
+
+      // Edit save button
+      document.getElementById('btn-edit-save').addEventListener('click', () => {
+        exitEditMode(true); // true = save changes
+      });
+
+      // Mark as done button
+      document.getElementById('btn-done').addEventListener('click', () => {
+        if (!state.selectedBuildingId) return;
+        const building = buildings.find(b => b.id === state.selectedBuildingId);
+        if (!building) return;
+
+        // Update status to done
+        building.kanbanStatus = 'done';
+        building.lastUpdate = new Date().toISOString();
+        building.lastUpdateBy = 'M. Keller';
+
+        // Re-render
+        renderDetailPanel(building);
+        renderKanbanBoard();
+        renderBuildingsList();
+        updateStatistik();
+      });
 
       // Global search
       document.getElementById('globalSearch').addEventListener('input', (e) => {
@@ -1536,6 +2113,9 @@
         content.classList.toggle('active', content.id === `tab-${tabId}`);
       });
 
+      // Toggle body class for settings tab (allows page scrolling)
+      document.body.classList.toggle('settings-tab-active', tabId === 'settings');
+
       if (tabId === 'karte') {
         setTimeout(() => map.invalidateSize(), 100);
       }
@@ -1544,6 +2124,11 @@
     }
 
     function selectBuilding(id, shouldUpdateURL = true) {
+      // Exit edit mode if switching buildings
+      if (state.editMode && state.selectedBuildingId !== id) {
+        exitEditMode(false); // Cancel without saving
+      }
+
       state.selectedBuildingId = id;
       const building = buildings.find(b => b.id === id);
 
@@ -1558,15 +2143,16 @@
         const markerBuilding = buildings.find(b => b.id === markerId);
         marker.setIcon(L.divIcon({
           className: 'custom-marker-container',
-          html: `<div class="custom-marker ${markerBuilding.priority} ${isSelected ? 'selected' : ''}" data-id="${markerId}"></div>`,
+          html: `<div class="custom-marker ${markerBuilding.priority} ${isSelected ? 'selected' : ''}" data-id="${markerId}"></div>
+                 <span class="marker-label">${markerId}</span>`,
           iconSize: isSelected ? [24, 24] : [16, 16],
           iconAnchor: isSelected ? [12, 12] : [8, 8]
         }));
       });
 
-      // Center map on selected building
+      // Center map on selected building (zoom 18 = street/building level)
       if (building) {
-        map.setView([building.lat, building.lng], 12);
+        map.setView([building.lat, building.lng], 18);
       }
 
       // Update detail panel
@@ -1645,13 +2231,26 @@
 
       function updateMultiSelectState() {
         const selected = Array.from(checkboxes).filter(cb => cb.checked).map(cb => cb.value);
-        state[stateKey] = selected.length === checkboxes.length ? [] : selected;
+        // Empty array = show all, specific values = show only those
+        // If nothing selected, use special marker that won't match any real value
+        if (selected.length === checkboxes.length) {
+          state[stateKey] = []; // All selected = show all
+        } else if (selected.length === 0) {
+          state[stateKey] = ['__NONE__']; // None selected = show none
+        } else {
+          state[stateKey] = selected; // Some selected = show only those
+        }
         updateLabel();
         applyFilters();
       }
 
       function updateLabel() {
         const selected = Array.from(checkboxes).filter(cb => cb.checked);
+        const hasPartialSelection = selected.length > 0 && selected.length < checkboxes.length;
+
+        // Toggle has-selection class for visual styling
+        container.classList.toggle('has-selection', hasPartialSelection);
+
         if (selected.length === 0) {
           label.textContent = label.dataset.default || elementId.replace('filter-', '');
           label.classList.add('none-selected');
@@ -1679,11 +2278,26 @@
       const checkboxes = container.querySelectorAll('input[type="checkbox"]');
       const label = container.querySelector('.multi-select-label');
 
+      // Initialize label.dataset.default if not already set (in case this runs before setupMultiSelectFilter)
+      if (label && !label.dataset.default) {
+        label.dataset.default = label.textContent;
+      }
+
       // If empty array, check all (show all)
       if (selectedValues.length === 0) {
         checkboxes.forEach(cb => cb.checked = true);
+        container.classList.remove('has-selection');
         if (label && label.dataset.default) {
           label.textContent = label.dataset.default;
+          label.classList.remove('none-selected');
+        }
+      } else if (selectedValues.includes('__NONE__')) {
+        // Special case: none selected (show none)
+        checkboxes.forEach(cb => cb.checked = false);
+        container.classList.remove('has-selection');
+        if (label && label.dataset.default) {
+          label.textContent = label.dataset.default;
+          label.classList.add('none-selected');
         }
       } else {
         // Check only selected values
@@ -1691,10 +2305,15 @@
           cb.checked = selectedValues.includes(cb.value);
         });
         // Update label
-        if (label) {
-          const checkedCount = selectedValues.length;
-          if (checkedCount === 1) {
-            const cb = Array.from(checkboxes).find(cb => cb.value === selectedValues[0]);
+        if (label && label.dataset.default) {
+          const checkedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
+          const hasPartialSelection = checkedCount > 0 && checkedCount < checkboxes.length;
+          container.classList.toggle('has-selection', hasPartialSelection);
+          label.classList.remove('none-selected');
+          if (checkedCount === checkboxes.length) {
+            label.textContent = label.dataset.default;
+          } else if (checkedCount === 1) {
+            const cb = Array.from(checkboxes).find(cb => cb.checked);
             label.textContent = cb ? cb.nextElementSibling.textContent : selectedValues[0];
           } else {
             label.textContent = `${checkedCount} ausgewählt`;
@@ -1706,6 +2325,8 @@
     function applyFilters(shouldUpdateURL = true) {
       updateMapMarkers();
       updateCounts();
+      updateStatistik();
+      renderKanbanBoard();
       if (tableVisible) renderTableView();
       if (shouldUpdateURL) updateURL();
     }
@@ -1719,8 +2340,9 @@
           if (!matchesSearch) return false;
         }
 
-        // Priority filters
-        if (!state.activeFilters[building.priority]) {
+        // Priority filters (if none selected, show all; if any selected, filter to those)
+        const anyPrioritySelected = state.activeFilters.high || state.activeFilters.medium || state.activeFilters.low;
+        if (anyPrioritySelected && !state.activeFilters[building.priority]) {
           return false;
         }
 
@@ -1778,6 +2400,223 @@
         const el = document.getElementById(`count-${priority}`);
         if (el) el.textContent = `(${count})`;
       });
+
+      // Update filter total counts
+      const filtered = getFilteredBuildings();
+      const filteredCountEl = document.getElementById('filtered-count');
+      const totalCountEl = document.getElementById('total-count');
+      if (filteredCountEl) filteredCountEl.textContent = filtered.length;
+      if (totalCountEl) totalCountEl.textContent = buildings.length;
+    }
+
+    function updateStatistik() {
+      const filtered = getFilteredBuildings();
+
+      // Helper to get initials from name
+      const getInitials = (name) => {
+        if (!name) return '?';
+        return name.split(' ').map(n => n[0]).join('').toUpperCase();
+      };
+
+      if (filtered.length === 0) {
+        // Reset to zero state
+        document.getElementById('stat-total').textContent = '0';
+        document.getElementById('stat-quality').textContent = '—';
+        document.getElementById('stat-errors').textContent = '0';
+        document.getElementById('stat-critical').textContent = '0';
+        document.getElementById('stat-validated').textContent = '0';
+        document.getElementById('stat-pending').textContent = '0';
+        return;
+      }
+
+      // Calculate KPIs
+      const totalCount = filtered.length;
+      const avgConfidence = Math.round(filtered.reduce((sum, b) => sum + b.confidence.total, 0) / filtered.length);
+      const criticalCount = filtered.filter(b => b.confidence.total < 50).length;
+      const validatedCount = filtered.filter(b => b.confidence.total >= 90).length;
+      const pendingCount = filtered.filter(b => b.kanbanStatus !== 'done').length;
+
+      // Count total errors (all data mismatches)
+      let totalErrors = 0;
+      filtered.forEach(b => {
+        if (b.data) {
+          Object.values(b.data).forEach(field => {
+            if (field && field.match === false) totalErrors++;
+          });
+        }
+      });
+
+      // Update KPI cards
+      document.getElementById('stat-total').textContent = totalCount;
+      document.getElementById('stat-quality').textContent = avgConfidence + '%';
+      document.getElementById('stat-errors').textContent = totalErrors;
+      document.getElementById('stat-critical').textContent = criticalCount;
+      document.getElementById('stat-validated').textContent = validatedCount;
+      document.getElementById('stat-pending').textContent = pendingCount;
+
+      // Calculate confidence distribution for histogram
+      const confBuckets = { critical: 0, warning: 0, moderate: 0, success: 0 };
+      filtered.forEach(b => {
+        const conf = b.confidence.total;
+        if (conf < 40) confBuckets.critical++;
+        else if (conf < 60) confBuckets.warning++;
+        else if (conf < 80) confBuckets.moderate++;
+        else confBuckets.success++;
+      });
+
+      // Update histogram chart
+      const maxBucket = Math.max(...Object.values(confBuckets), 1);
+      const histogramEl = document.getElementById('confidence-histogram');
+      if (histogramEl) {
+        const groups = histogramEl.querySelectorAll('.histogram-bar-group');
+        const bucketKeys = ['critical', 'warning', 'moderate', 'success'];
+        groups.forEach((group, i) => {
+          const bar = group.querySelector('.histogram-bar');
+          const value = group.querySelector('.histogram-value');
+          const count = confBuckets[bucketKeys[i]];
+          const height = Math.max((count / maxBucket) * 100, count > 0 ? 5 : 0);
+          bar.style.height = height + '%';
+          value.textContent = count;
+        });
+      }
+
+      // Calculate errors by severity (based on data mismatches)
+      let errorCount = 0, warningCount = 0, infoCount = 0;
+      filtered.forEach(b => {
+        const conf = b.confidence.total;
+        if (conf < 50) errorCount++;
+        else if (conf < 80) warningCount++;
+        else if (conf < 90) infoCount++;
+      });
+
+      // Update severity chart
+      const maxSeverity = Math.max(errorCount, warningCount, infoCount, 1);
+      const severityChart = document.getElementById('severity-chart');
+      if (severityChart) {
+        const rows = severityChart.querySelectorAll('.severity-bar-row');
+        const severityCounts = [errorCount, warningCount, infoCount];
+        rows.forEach((row, i) => {
+          const fill = row.querySelector('.severity-bar-fill');
+          const value = row.querySelector('.severity-value');
+          const width = (severityCounts[i] / maxSeverity) * 100;
+          fill.style.width = width + '%';
+          value.textContent = severityCounts[i];
+        });
+      }
+
+      // Calculate mismatches by source
+      const sourceCounts = { georef: 0, gwr: 0, sap: 0, address: 0 };
+      filtered.forEach(b => {
+        if (b.confidence.georef < 80) sourceCounts.georef++;
+        if (b.confidence.gwr < 80) sourceCounts.gwr++;
+        if (b.confidence.sap < 80) sourceCounts.sap++;
+        if (b.data && b.data.address && !b.data.address.match) sourceCounts.address++;
+      });
+
+      // Update source chart
+      const maxSource = Math.max(...Object.values(sourceCounts), 1);
+      const sourceChart = document.getElementById('source-chart');
+      if (sourceChart) {
+        const rows = sourceChart.querySelectorAll('.chart-row');
+        const sourceKeys = ['georef', 'gwr', 'sap', 'address'];
+        rows.forEach((row, i) => {
+          const fill = row.querySelector('.chart-row-fill');
+          const value = row.querySelector('.chart-row-value');
+          const count = sourceCounts[sourceKeys[i]];
+          const width = (count / maxSource) * 100;
+          fill.style.width = width + '%';
+          value.textContent = count;
+        });
+      }
+
+      // Calculate average confidence by canton
+      const kantonData = {};
+      filtered.forEach(b => {
+        if (!kantonData[b.kanton]) {
+          kantonData[b.kanton] = { sum: 0, count: 0 };
+        }
+        kantonData[b.kanton].sum += b.confidence.total;
+        kantonData[b.kanton].count++;
+      });
+
+      // Sort by average confidence and take top 5
+      const kantonAvgs = Object.entries(kantonData)
+        .map(([kanton, data]) => ({ kanton, avg: Math.round(data.sum / data.count) }))
+        .sort((a, b) => b.avg - a.avg)
+        .slice(0, 5);
+
+      // Update kanton chart
+      const kantonChart = document.getElementById('kanton-chart');
+      if (kantonChart) {
+        kantonChart.innerHTML = kantonAvgs.map(k => `
+          <div class="kanton-row">
+            <span class="kanton-label">${k.kanton}</span>
+            <div class="kanton-bar-track">
+              <div class="kanton-bar-fill" style="width: ${k.avg}%"></div>
+            </div>
+            <span class="kanton-value">${k.avg}%</span>
+          </div>
+        `).join('');
+      }
+
+      // Calculate tasks per assignee
+      const assigneeData = {};
+      filtered.forEach(b => {
+        const assignee = b.assignee || 'Nicht zugewiesen';
+        if (!assigneeData[assignee]) {
+          assigneeData[assignee] = 0;
+        }
+        assigneeData[assignee]++;
+      });
+
+      // Sort by count and render assignee chart
+      const assigneeCounts = Object.entries(assigneeData)
+        .map(([name, count]) => ({ name, count }))
+        .sort((a, b) => b.count - a.count);
+
+      const maxAssignee = Math.max(...assigneeCounts.map(a => a.count), 1);
+      const assigneeChart = document.getElementById('assignee-chart');
+      if (assigneeChart) {
+        assigneeChart.innerHTML = assigneeCounts.map(a => `
+          <div class="assignee-row">
+            <div class="assignee-avatar-small">${getInitials(a.name === 'Nicht zugewiesen' ? '?' : a.name)}</div>
+            <span class="assignee-name">${a.name === 'Nicht zugewiesen' ? 'Offen' : a.name.split(' ')[1] || a.name}</span>
+            <div class="assignee-bar-track">
+              <div class="assignee-bar-fill" style="width: ${(a.count / maxAssignee) * 100}%"></div>
+            </div>
+            <span class="assignee-value">${a.count}</span>
+          </div>
+        `).join('');
+      }
+
+      // Calculate status by portfolio
+      const portfolioData = {};
+      filtered.forEach(b => {
+        if (!portfolioData[b.portfolio]) {
+          portfolioData[b.portfolio] = { sum: 0, count: 0 };
+        }
+        portfolioData[b.portfolio].sum += b.confidence.total;
+        portfolioData[b.portfolio].count++;
+      });
+
+      // Sort by average confidence
+      const portfolioAvgs = Object.entries(portfolioData)
+        .map(([portfolio, data]) => ({ portfolio, avg: Math.round(data.sum / data.count), count: data.count }))
+        .sort((a, b) => b.avg - a.avg);
+
+      // Update portfolio chart
+      const portfolioChart = document.getElementById('portfolio-chart');
+      if (portfolioChart) {
+        portfolioChart.innerHTML = portfolioAvgs.map(p => `
+          <div class="portfolio-row">
+            <span class="portfolio-label">${p.portfolio}</span>
+            <div class="portfolio-bar-track">
+              <div class="portfolio-bar-fill" style="width: ${p.avg}%"></div>
+            </div>
+            <span class="portfolio-value">${p.avg}%</span>
+          </div>
+        `).join('');
+      }
     }
 
     function switchBasemap(basemap) {
@@ -1807,8 +2646,11 @@
         }
       });
 
-      // Update table view
+      // Update kanban board, table view and statistics
+      renderKanbanBoard();
       if (tableVisible) renderTableView();
+      updateCounts();
+      updateStatistik();
     }
 
     // ========================================
@@ -1942,8 +2784,8 @@
           <td>
             <span class="badge ${priority.badge}">${priority.label}</span>
           </td>
-          <td><code class="sap-id">${building.id}</code></td>
-          <td class="cell-name">${building.name}</td>
+          <td>${building.id}</td>
+          <td>${building.name}</td>
           <td>${building.kanton}</td>
           <td>
             <span class="confidence-value ${building.confidence.total < 50 ? 'critical' : building.confidence.total < 80 ? 'warning' : 'ok'}">
@@ -2009,11 +2851,42 @@
     function setupFilterToggle() {
       const filterToggle = document.getElementById('filter-toggle');
       const filterBar = document.getElementById('filter-bar');
+      const filterReset = document.getElementById('filter-reset');
 
       filterToggle.addEventListener('click', () => {
         filterBarVisible = !filterBarVisible;
         filterBar.classList.toggle('hidden', !filterBarVisible);
         filterToggle.classList.toggle('active', filterBarVisible);
+      });
+
+      // Reset all filters to default
+      filterReset.addEventListener('click', () => {
+        // Reset priority filters to default (none selected = show all)
+        state.activeFilters = { high: false, medium: false, low: false, myTasks: false };
+
+        // Reset dropdown filters
+        state.filterKanton = [];
+        state.filterConfidence = [];
+        state.filterPortfolio = [];
+        state.filterAssignee = [];
+
+        // Clear search
+        searchQuery = '';
+        document.getElementById('globalSearch').value = '';
+
+        // Update filter chips UI - remove active from all (default = none selected)
+        document.querySelectorAll('.filter-chip[data-filter]').forEach(chip => {
+          chip.classList.remove('active');
+        });
+
+        // Reset multi-select dropdowns
+        applyMultiSelectState('filter-kanton', []);
+        applyMultiSelectState('filter-confidence', []);
+        applyMultiSelectState('filter-portfolio', []);
+        applyMultiSelectState('filter-assignee', []);
+
+        // Apply filters and update URL
+        applyFilters();
       });
     }
 
@@ -2066,8 +2939,17 @@
       const selector = document.getElementById('basemap-selector');
       const trigger = document.getElementById('basemap-trigger');
       const triggerThumb = document.getElementById('basemap-trigger-thumb');
+      const triggerLabel = document.getElementById('basemap-trigger-label');
       const panel = document.getElementById('basemap-panel');
       const options = document.querySelectorAll('.basemap-option');
+
+      // Basemap labels for trigger display
+      const basemapLabels = {
+        none: 'Kein HG',
+        grey: 'Grau',
+        color: 'Farbig',
+        satellite: 'Luftbild'
+      };
 
       // Toggle panel on trigger click
       trigger.addEventListener('click', (e) => {
@@ -2085,8 +2967,9 @@
           options.forEach(opt => opt.classList.remove('active'));
           option.classList.add('active');
 
-          // Update trigger thumbnail to show current basemap
+          // Update trigger thumbnail and title to show current basemap
           triggerThumb.className = 'basemap-thumb basemap-' + basemap;
+          triggerLabel.textContent = basemapLabels[basemap] || basemap;
 
           // Switch the actual map tiles
           switchBasemapTiles(basemap);
@@ -2109,6 +2992,263 @@
           selector.classList.remove('expanded');
         }
       });
+    }
+
+    // ========================================
+    // Layer Widget
+    // ========================================
+    let overlayLayers = {};
+
+    function setupLayerWidget() {
+      const widget = document.getElementById('layer-widget');
+      const trigger = document.getElementById('layer-widget-trigger');
+      const header = widget.querySelector('.layer-widget-header');
+      const checkboxes = widget.querySelectorAll('input[type="checkbox"]');
+      const infoButtons = widget.querySelectorAll('.layer-info-btn');
+
+      // Toggle collapse/expand
+      trigger.addEventListener('click', () => {
+        widget.classList.remove('collapsed');
+      });
+
+      header.addEventListener('click', () => {
+        widget.classList.add('collapsed');
+      });
+
+      // Handle layer toggle
+      checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+          const layerId = checkbox.dataset.layer;
+          if (checkbox.checked) {
+            addOverlayLayer(layerId);
+          } else {
+            removeOverlayLayer(layerId);
+          }
+        });
+      });
+
+      // Handle info button clicks
+      infoButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          const layerId = btn.dataset.layer;
+          showLayerInfo(layerId, btn);
+        });
+      });
+    }
+
+    // Layer configuration: some layers are WMS, others WMTS
+    // minZoom based on Swisstopo tile matrix availability
+    const layerConfig = {
+      'ch.swisstopo-vd.stand-oerebkataster': { type: 'wms', minZoom: 8 },
+      'ch.bfs.gebaeude_wohnungs_register': { type: 'wmts', minZoom: 13 }
+    };
+
+    function addOverlayLayer(layerId) {
+      if (overlayLayers[layerId]) return;
+
+      const config = layerConfig[layerId] || { type: 'wmts', minZoom: 8 };
+      let layer;
+
+      if (config.type === 'wms') {
+        // Swisstopo WMS layer
+        layer = L.tileLayer.wms('https://wms.geo.admin.ch/', {
+          layers: layerId,
+          format: 'image/png',
+          transparent: true,
+          attribution: '© swisstopo',
+          opacity: 0.7,
+          minZoom: config.minZoom || 8
+        });
+      } else {
+        // Swisstopo WMTS layer
+        layer = L.tileLayer(
+          `https://wmts.geo.admin.ch/1.0.0/${layerId}/default/current/3857/{z}/{x}/{y}.png`,
+          {
+            attribution: '© swisstopo',
+            maxZoom: 19,
+            minZoom: config.minZoom || 13,
+            opacity: 0.7
+          }
+        );
+      }
+
+      layer.addTo(map);
+      overlayLayers[layerId] = layer;
+    }
+
+    function removeOverlayLayer(layerId) {
+      if (overlayLayers[layerId]) {
+        map.removeLayer(overlayLayers[layerId]);
+        delete overlayLayers[layerId];
+      }
+      // Remove highlight layer when ÖREB is disabled
+      if (layerId === 'ch.swisstopo-vd.stand-oerebkataster' && identifyHighlightLayer) {
+        map.removeLayer(identifyHighlightLayer);
+        identifyHighlightLayer = null;
+      }
+    }
+
+    // Feature identification for clickable layers
+    let identifyHighlightLayer = null;
+    let identifyAbortController = null;
+
+    function setupLayerIdentify() {
+      map.on('click', async (e) => {
+        // Only identify if ÖREB layer is enabled
+        if (!overlayLayers['ch.swisstopo-vd.stand-oerebkataster']) return;
+
+        // Don't identify if clicking on a marker
+        if (e.originalEvent && e.originalEvent.target.closest('.custom-marker')) return;
+
+        // Cancel any in-flight identify request to prevent race conditions
+        if (identifyAbortController) {
+          identifyAbortController.abort();
+        }
+        identifyAbortController = new AbortController();
+        const currentController = identifyAbortController;
+
+        const latlng = e.latlng;
+        const bounds = map.getBounds();
+        const size = map.getSize();
+        const zoom = map.getZoom();
+
+        // Adaptive tolerance based on zoom level
+        // At low zoom (large area per pixel) use smaller tolerance for precision
+        // At high zoom (small area per pixel) use larger tolerance for easier clicking
+        const tolerance = zoom <= 10 ? 2 : zoom <= 12 ? 5 : zoom <= 14 ? 8 : 12;
+
+        // Remove previous highlight before new request
+        if (identifyHighlightLayer) {
+          map.removeLayer(identifyHighlightLayer);
+          identifyHighlightLayer = null;
+        }
+
+        // Use WGS84 coordinates with sr=4326
+        const params = new URLSearchParams({
+          geometry: `${latlng.lng},${latlng.lat}`,
+          geometryType: 'esriGeometryPoint',
+          imageDisplay: `${size.x},${size.y},96`,
+          mapExtent: [
+            bounds.getWest(),
+            bounds.getSouth(),
+            bounds.getEast(),
+            bounds.getNorth()
+          ].join(','),
+          tolerance: tolerance,
+          layers: 'all:ch.swisstopo-vd.stand-oerebkataster',
+          returnGeometry: true,
+          geometryFormat: 'geojson',
+          sr: 4326,
+          lang: 'de'
+        });
+
+        try {
+          const response = await fetch(
+            `https://api3.geo.admin.ch/rest/services/ech/MapServer/identify?${params}`,
+            { signal: currentController.signal }
+          );
+          if (!response.ok) return;
+
+          const data = await response.json();
+
+          if (data.results && data.results.length > 0) {
+            const feature = data.results[0];
+            const attrs = feature.properties || feature.attributes || {};
+
+            // Add polygon highlight
+            if (feature.geometry) {
+              identifyHighlightLayer = L.geoJSON(feature.geometry, {
+                style: {
+                  color: '#1a365d',
+                  weight: 2,
+                  fillColor: '#1a365d',
+                  fillOpacity: 0.2
+                }
+              }).addTo(map);
+            }
+
+            // Build popup content
+            const popupContent = `
+              <div class="identify-popup">
+                <strong>${attrs.gemeindename || 'Gemeinde'}</strong>
+                <table class="identify-table">
+                  <tr><td>BFS-Nr:</td><td>${attrs.bfs_nr || '-'}</td></tr>
+                  <tr><td>Status:</td><td>${attrs.oereb_status_de || '-'}</td></tr>
+                  <tr><td>Kontakt:</td><td>${attrs.email || '-'}</td></tr>
+                  <tr><td>Telefon:</td><td>${attrs.telefon || '-'}</td></tr>
+                </table>
+                ${attrs.url_oereb ? `<a href="${attrs.url_oereb}" target="_blank" class="identify-link">ÖREB-Portal öffnen</a>` : ''}
+              </div>
+            `;
+
+            L.popup()
+              .setLatLng(latlng)
+              .setContent(popupContent)
+              .openOn(map);
+          }
+        } catch (error) {
+          // Ignore abort errors (expected when user clicks rapidly)
+          if (error.name !== 'AbortError') {
+            console.error('Identify error:', error);
+          }
+        }
+      });
+    }
+
+    async function showLayerInfo(layerId, buttonEl) {
+      // Create or get modal element
+      let modal = document.getElementById('layer-info-modal');
+      if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'layer-info-modal';
+        modal.className = 'layer-info-modal';
+        modal.innerHTML = `
+          <div class="layer-info-modal-content">
+            <div class="layer-info-modal-header">
+              <span class="layer-info-modal-title">Layer-Informationen</span>
+              <button class="layer-info-modal-close"><i data-lucide="x" class="icon"></i></button>
+            </div>
+            <div class="layer-info-modal-body"></div>
+          </div>
+        `;
+        document.body.appendChild(modal);
+        lucide.createIcons({ nodes: [modal] });
+
+        // Close button handler
+        modal.querySelector('.layer-info-modal-close').addEventListener('click', () => {
+          modal.classList.remove('visible');
+        });
+
+        // Close on overlay click
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) {
+            modal.classList.remove('visible');
+          }
+        });
+
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && modal.classList.contains('visible')) {
+            modal.classList.remove('visible');
+          }
+        });
+      }
+
+      // Show loading state
+      const bodyEl = modal.querySelector('.layer-info-modal-body');
+      bodyEl.innerHTML = '<div class="layer-info-loading">Lade Informationen...</div>';
+      modal.classList.add('visible');
+
+      // Fetch legend HTML from geo.admin.ch
+      try {
+        const response = await fetch(`https://api3.geo.admin.ch/rest/services/api/MapServer/${layerId}/legend?lang=de`);
+        const html = await response.text();
+        bodyEl.innerHTML = html;
+      } catch (error) {
+        bodyEl.innerHTML = '<p>Metadaten konnten nicht geladen werden.</p>';
+      }
     }
 
     // ========================================
@@ -2178,6 +3318,73 @@
     }
 
     // ========================================
+    // Detail Panel Resize
+    // ========================================
+    function setupDetailPanelResize() {
+      const resizeHandle = document.getElementById('detail-resize-handle');
+      const detailPanel = document.getElementById('detail-panel');
+      let isResizing = false;
+      let startX = 0;
+      let startWidth = 0;
+
+      resizeHandle.addEventListener('mousedown', (e) => {
+        isResizing = true;
+        startX = e.clientX;
+        startWidth = detailPanel.offsetWidth;
+        resizeHandle.classList.add('dragging');
+        document.body.style.cursor = 'ew-resize';
+        document.body.style.userSelect = 'none';
+        e.preventDefault();
+      });
+
+      document.addEventListener('mousemove', (e) => {
+        if (!isResizing) return;
+
+        // Dragging left increases width, dragging right decreases
+        const deltaX = startX - e.clientX;
+        const newWidth = Math.min(Math.max(startWidth + deltaX, 280), 600);
+        detailPanel.style.width = newWidth + 'px';
+
+        // Resize map to fit
+        map.invalidateSize();
+      });
+
+      document.addEventListener('mouseup', () => {
+        if (isResizing) {
+          isResizing = false;
+          resizeHandle.classList.remove('dragging');
+          document.body.style.cursor = '';
+          document.body.style.userSelect = '';
+        }
+      });
+
+      // Touch support
+      resizeHandle.addEventListener('touchstart', (e) => {
+        isResizing = true;
+        startX = e.touches[0].clientX;
+        startWidth = detailPanel.offsetWidth;
+        resizeHandle.classList.add('dragging');
+        e.preventDefault();
+      });
+
+      document.addEventListener('touchmove', (e) => {
+        if (!isResizing) return;
+
+        const deltaX = startX - e.touches[0].clientX;
+        const newWidth = Math.min(Math.max(startWidth + deltaX, 280), 600);
+        detailPanel.style.width = newWidth + 'px';
+        map.invalidateSize();
+      });
+
+      document.addEventListener('touchend', () => {
+        if (isResizing) {
+          isResizing = false;
+          resizeHandle.classList.remove('dragging');
+        }
+      });
+    }
+
+    // ========================================
     // Accordion Toggle
     // ========================================
     function setupAccordions() {
@@ -2187,6 +3394,90 @@
           accordion.classList.toggle('open');
         });
       });
+    }
+
+    // ========================================
+    // Rules Display
+    // ========================================
+    function renderRules() {
+      const container = document.getElementById('rules-container');
+      if (!container || !rulesConfig) {
+        container.innerHTML = '<div class="rules-empty">Keine Regeln verfügbar</div>';
+        return;
+      }
+
+      const severityLabels = rulesConfig.severityLevels || {
+        error: { label: 'Fehler', priority: 1 },
+        warning: { label: 'Warnung', priority: 2 },
+        info: { label: 'Hinweis', priority: 3 }
+      };
+
+      const html = rulesConfig.ruleSets.map(ruleSet => {
+        const rulesHtml = ruleSet.rules.map(rule => {
+          const severityInfo = severityLabels[rule.severity] || { label: rule.severity };
+          return `
+            <div class="rule-item">
+              <span class="rule-severity ${rule.severity}"></span>
+              <div class="rule-details">
+                <div class="rule-header">
+                  <span class="rule-name">${rule.name}</span>
+                  <span class="rule-id">${rule.id}</span>
+                </div>
+                <p class="rule-description">${rule.description}</p>
+                <div class="rule-meta">
+                  <span class="rule-tag">${Array.isArray(rule.attribute) ? rule.attribute.join(', ') : rule.attribute}</span>
+                  <span class="rule-tag">${rule.operator}</span>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        const enabledStatus = ruleSet.enabled ? 'Aktiv' : 'Inaktiv';
+        const enabledClass = ruleSet.enabled ? 'enabled' : 'disabled';
+
+        return `
+          <div class="rule-set" data-ruleset-id="${ruleSet.id}">
+            <button class="rule-set-header" type="button">
+              <div class="rule-set-info">
+                <span class="rule-set-name">${ruleSet.name}</span>
+                <span class="rule-set-count">${ruleSet.rules.length} Regeln</span>
+                <span class="rule-set-status ${enabledClass}">${enabledStatus}</span>
+              </div>
+              <i data-lucide="chevron-down" class="icon-sm rule-set-chevron"></i>
+            </button>
+            <div class="rule-set-content">
+              <p class="rule-set-description">${ruleSet.description}</p>
+              <div class="rules-list">
+                ${rulesHtml}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      container.innerHTML = html;
+
+      // Re-initialize icons
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+
+      // Setup expand/collapse
+      container.querySelectorAll('.rule-set-header').forEach(header => {
+        header.addEventListener('click', () => {
+          const ruleSet = header.closest('.rule-set');
+          ruleSet.classList.toggle('expanded');
+        });
+      });
+    }
+
+    function setupRunChecksButton() {
+      const runBtn = document.getElementById('run-all-checks');
+      if (runBtn) {
+        runBtn.addEventListener('click', () => {
+          // Placeholder for future Python integration
+          alert('Prüfung wird gestartet...\n\nDiese Funktion wird in Zukunft die Python-basierte Validierung auslösen.');
+        });
+      }
     }
 
     // ========================================
@@ -2218,8 +3509,8 @@
 
         // Get map container dimensions
         const mapRect = mapContainer.getBoundingClientRect();
-        const menuWidth = 200;
-        const menuHeight = 160;
+        const menuWidth = 220;
+        const menuHeight = 280;
 
         // Calculate click position relative to map
         const clickX = e.containerPoint.x;
@@ -2331,6 +3622,42 @@
           selectBuilding(nearestBuilding.id);
         }
 
+        hideContextMenu();
+      });
+
+      // Open in Google Maps
+      const contextMenuGoogleMaps = document.getElementById('context-menu-google-maps');
+      contextMenuGoogleMaps.addEventListener('click', function() {
+        if (!contextMenuLatLng) return;
+        const lat = contextMenuLatLng.lat.toFixed(6);
+        const lng = contextMenuLatLng.lng.toFixed(6);
+        const url = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+        window.open(url, '_blank');
+        hideContextMenu();
+      });
+
+      // Open in Swisstopo map.geo.admin.ch
+      const contextMenuSwisstopo = document.getElementById('context-menu-swisstopo');
+      contextMenuSwisstopo.addEventListener('click', function() {
+        if (!contextMenuLatLng) return;
+        // Convert WGS84 to LV95 coordinates (required by map.geo.admin.ch)
+        const lv95 = wgs84ToLV95(contextMenuLatLng.lat, contextMenuLatLng.lng);
+        const zoom = Math.round(map.getZoom());
+        const url = `https://map.geo.admin.ch/#/map?lang=de&center=${lv95.E},${lv95.N}&z=${zoom}&topic=ech&layers=ch.swisstopo.amtliches-strassenverzeichnis;ch.bfs.gebaeude_wohnungs_register;ch.swisstopo-vd.stand-oerebkataster&bgLayer=ch.swisstopo.swissimage&crosshair=marker,${lv95.E},${lv95.N}`;
+        window.open(url, '_blank');
+        hideContextMenu();
+      });
+
+      // Open in Google Earth 3D
+      const contextMenuGoogleEarth = document.getElementById('context-menu-google-earth');
+      contextMenuGoogleEarth.addEventListener('click', function() {
+        if (!contextMenuLatLng) return;
+        const lat = contextMenuLatLng.lat.toFixed(6);
+        const lng = contextMenuLatLng.lng.toFixed(6);
+        // Google Earth URL format: @lat,lng,altitude_a,heading_y,tilt_h,range_t,rotation_r
+        // 500a = 500m altitude, 35y = 35° heading, 60t = 60° tilt, 0r = 0° rotation
+        const url = `https://earth.google.com/web/@${lat},${lng},500a,35y,60t,0r`;
+        window.open(url, '_blank');
         hideContextMenu();
       });
     }

@@ -1,67 +1,56 @@
 /* ========================================
    CSS Custom Properties - Design System
+   Minimal, functional color usage
    ======================================== */
 :root {
   /* ======================================
-     COLORS
+     COLORS - Restrained palette
      ====================================== */
 
-  /* Swiss Federal Brand */
+  /* Brand - used sparingly */
   --swiss-red: #d8232a;
   --federal-blue: #1a365d;
   --federal-blue-dark: #152c4f;
-  --federal-blue-subtle: rgba(26, 54, 93, 0.08);
-  --federal-blue-light: rgba(26, 54, 93, 0.1);
 
-  /* Background Colors */
-  --bg-light: #f7f8fa;
+  /* Neutral backgrounds */
   --bg-white: #ffffff;
+  --bg-subtle: #f8f9fa;
+  --bg-muted: #f1f3f5;
+  --bg-emphasis: #e9ecef;
 
-  /* Status Colors */
-  --status-critical: #dc2626;
-  --status-warning: #ea580c;
-  --status-minor: #facc15;
-  --status-ok: #16a34a;
+  /* Functional colors - only when meaning is needed */
+  --color-critical: #dc2626;
+  --color-warning: #d97706;
+  --color-success: #059669;
 
-  /* Status Background Colors (for cards, alerts) */
-  --status-critical-bg: #fef2f2;
-  --status-critical-border: #fecaca;
-  --status-warning-bg: #fff7ed;
-  --status-warning-border: #fed7aa;
-  --status-minor-bg: #fefce8;
-  --status-minor-border: #fef08a;
-  --status-ok-bg: #f0fdf4;
-  --status-ok-border: #bbf7d0;
-
-  /* Text Colors */
-  --text-primary: #1f2937;
-  --text-secondary: #6b7280;
-  --text-muted: #9ca3af;
+  /* Text hierarchy */
+  --text-primary: #1a1a1a;
+  --text-secondary: #495057;
+  --text-muted: #868e96;
   --text-inverse: #ffffff;
 
-  /* Border Colors */
-  --border-light: #e5e7eb;
-  --border-medium: #d1d5db;
+  /* Borders - improved contrast */
+  --border-default: #dee2e6;
+  --border-strong: #ced4da;
 
-  /* Selection & Focus */
-  --selection-bg: #ebf5ff;
+  /* Interactive states */
+  --interactive-hover: rgba(0, 0, 0, 0.04);
+  --interactive-active: rgba(0, 0, 0, 0.08);
   --focus-ring: var(--federal-blue);
 
-  /* Tag Colors */
-  --tag-georef: #3b82f6;
-  --tag-georef-bg: #dbeafe;
-  --tag-sap: #f59e0b;
-  --tag-sap-bg: #fef3c7;
-  --tag-sap-text: #b45309;
-  --tag-gwr: #10b981;
-  --tag-gwr-bg: #d1fae5;
-  --tag-gwr-text: #047857;
-  --tag-address: #8b5cf6;
-  --tag-address-bg: #ede9fe;
+  /* Active/Selected states - more prominent */
+  --bg-active: #e8eef5;
+  --bg-active-emphasis: #dbe5f0;
+  --border-active: #9db4cf;
 
-  /* Overlays */
-  --overlay-dark: rgba(0, 0, 0, 0.5);
-  --overlay-light: rgba(255, 255, 255, 0.9);
+  /* Data type indicators - muted, not decorative */
+  --type-geo: #6366f1;
+  --type-sap: #0891b2;
+  --type-gwr: #059669;
+  --type-address: #7c3aed;
+
+  /* Overlay */
+  --overlay: rgba(0, 0, 0, 0.4);
 
   /* ======================================
      TYPOGRAPHY
@@ -130,17 +119,11 @@
   --radius-full: 9999px;
 
   /* ======================================
-     SHADOWS
+     SHADOWS - Minimal, functional
      ====================================== */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
-
-  /* Button Shadows */
-  --shadow-button: 0 2px 4px rgba(26, 54, 93, 0.15);
-  --shadow-button-hover: 0 4px 8px rgba(26, 54, 93, 0.2);
-  --shadow-button-success: 0 2px 4px rgba(22, 163, 74, 0.2);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 2px 4px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.08);
 
   /* ======================================
      TRANSITIONS

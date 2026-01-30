@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="68" height="68" viewBox="0 0 68 68">
+  <rect width="68" height="68" fill="#e8e8e8"/>
+  <!-- Water -->
+  <path d="M0 45 Q15 42 25 48 T50 44 T68 47 V68 H0 Z" fill="#c5d5e5"/>
+  <!-- Roads -->
+  <line x1="10" y1="0" x2="10" y2="45" stroke="#ffffff" stroke-width="2"/>
+  <line x1="0" y1="25" x2="68" y2="20" stroke="#ffffff" stroke-width="3"/>
+  <line x1="35" y1="0" x2="50" y2="45" stroke="#d5d5d5" stroke-width="1.5"/>
+  <!-- Buildings -->
+  <rect x="15" y="8" width="8" height="10" fill="#d0d0d0"/>
+  <rect x="26" y="5" width="6" height="8" fill="#d0d0d0"/>
+  <rect x="42" y="10" width="10" height="6" fill="#d0d0d0"/>
+  <rect x="55" y="3" width="7" height="12" fill="#c8c8c8"/>
+  <rect x="18" y="28" width="12" height="8" fill="#d0d0d0"/>
+  <rect x="45" y="30" width="8" height="10" fill="#c8c8c8"/>
+</svg>
