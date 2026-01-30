@@ -71,15 +71,15 @@
   --font-family: 'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-family-mono: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
 
-  /* Font Sizes - Accessible Scale */
-  --font-xs: 12px;      /* Small labels, badges */
-  --font-sm: 13px;      /* Secondary text */
-  --font-base: 14px;    /* Body text, buttons - MINIMUM for accessibility */
-  --font-md: 16px;      /* Section titles */
-  --font-lg: 18px;      /* Page titles */
-  --font-xl: 24px;      /* Large headings */
-  --font-2xl: 32px;     /* Stat values */
-  --font-3xl: 36px;     /* Hero numbers */
+  /* Font Sizes - Accessible Scale (WCAG AA minimum 14px for body) */
+  --font-xs: 11px;      /* Decorative only - use sparingly */
+  --font-sm: 13px;      /* Badges, labels, metadata */
+  --font-base: 14px;    /* Body text, buttons - minimum readable */
+  --font-md: 15px;      /* Enhanced body text, table cells */
+  --font-lg: 17px;      /* Section titles, card headers */
+  --font-xl: 20px;      /* Page titles */
+  --font-2xl: 28px;     /* Stat values */
+  --font-3xl: 32px;     /* Hero numbers */
 
   /* Font Weights */
   --font-normal: 400;
@@ -152,7 +152,7 @@
   /* ======================================
      LAYOUT
      ====================================== */
-  --header-height: 56px;
+  --header-height: 64px;
   --detail-width: 400px;
   --sidebar-width: 320px;
   --max-content-width: 1400px;

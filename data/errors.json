@@ -1,0 +1,108 @@
+{
+  "1080/2020/AA": [
+    {
+      "type": "georef",
+      "title": "Koordinatenabweichung",
+      "description": "SAP - GWR: 47m Differenz",
+      "severity": "warning"
+    }
+  ],
+  "1080/2021/AB": [
+    {
+      "type": "georef",
+      "title": "Keine Koordinaten",
+      "description": "Koordinaten in SAP RE-FX fehlen vollständig",
+      "severity": "critical"
+    },
+    {
+      "type": "gwr",
+      "title": "EGID nicht gefunden",
+      "description": "Gebäude im GWR nicht registriert",
+      "severity": "critical"
+    }
+  ],
+  "1090/3010/AC": [
+    {
+      "type": "sap",
+      "title": "Baujahr Diskrepanz",
+      "description": "SAP: 1952, GWR: 1954",
+      "severity": "minor"
+    }
+  ],
+  "1100/4050/AD": [],
+  "1110/5020/AE": [
+    {
+      "type": "sap",
+      "title": "Adressformat",
+      "description": "Unterschiedliche Schreibweise der Strasse",
+      "severity": "warning"
+    },
+    {
+      "type": "address",
+      "title": "PLZ Abweichung",
+      "description": "SAP: 3003, GWR: 3011",
+      "severity": "warning"
+    }
+  ],
+  "1120/6030/AF": [
+    {
+      "type": "georef",
+      "title": "Massive Abweichung",
+      "description": "Koordinaten weichen um 234m ab",
+      "severity": "critical"
+    },
+    {
+      "type": "gwr",
+      "title": "Falsches Gebäude",
+      "description": "EGID verweist auf anderes Gebäude",
+      "severity": "critical"
+    }
+  ],
+  "1100/4051/AG": [
+    {
+      "type": "sap",
+      "title": "Fehlende Attribute",
+      "description": "Nutzungsart nicht erfasst",
+      "severity": "warning"
+    }
+  ],
+  "1080/2022/AH": [
+    {
+      "type": "gwr",
+      "title": "Gebäudefläche",
+      "description": "Differenz von 12m² zur GWR-Angabe",
+      "severity": "minor"
+    }
+  ],
+  "1130/7010/AI": [],
+  "1140/8020/AJ": [
+    {
+      "type": "address",
+      "title": "Hausnummer",
+      "description": "SAP: 15, GWR: 15a",
+      "severity": "warning"
+    }
+  ],
+  "1150/9030/AK": [
+    {
+      "type": "georef",
+      "title": "Position falsch",
+      "description": "Gebäude am falschen Standort eingetragen",
+      "severity": "critical"
+    },
+    {
+      "type": "sap",
+      "title": "Daten veraltet",
+      "description": "Letzte Aktualisierung vor 5 Jahren",
+      "severity": "warning"
+    }
+  ],
+  "1160/1040/AL": [
+    {
+      "type": "gwr",
+      "title": "Stockwerke",
+      "description": "SAP: 4, GWR: 3",
+      "severity": "minor"
+    }
+  ]
+}

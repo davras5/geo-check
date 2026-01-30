@@ -1,0 +1,55 @@
+{
+  "1080/2020/AA": [
+    {
+      "author": "M. Keller",
+      "date": "12.01.2026",
+      "text": "Vor Ort verifiziert - GWR Position ist korrekt.",
+      "system": false
+    },
+    {
+      "author": "System",
+      "date": "10.01.2026",
+      "text": "Automatisch erkannt: Koordinatenabweichung > 30m",
+      "system": true
+    }
+  ],
+  "1080/2021/AB": [],
+  "1090/3010/AC": [
+    {
+      "author": "S. Brunner",
+      "date": "14.01.2026",
+      "text": "Archivdokumente angefragt zur Klärung.",
+      "system": false
+    }
+  ],
+  "1100/4050/AD": [
+    {
+      "author": "System",
+      "date": "08.01.2026",
+      "text": "Alle Prüfungen bestanden.",
+      "system": true
+    }
+  ],
+  "1110/5020/AE": [],
+  "1120/6030/AF": [
+    {
+      "author": "System",
+      "date": "05.01.2026",
+      "text": "Kritischer Fehler erkannt - manuelle Prüfung erforderlich",
+      "system": true
+    }
+  ],
+  "1100/4051/AG": [],
+  "1080/2022/AH": [],
+  "1130/7010/AI": [],
+  "1140/8020/AJ": [
+    {
+      "author": "M. Keller",
+      "date": "13.01.2026",
+      "text": "Vor Ort geprüft - Hausnummer ist 15a.",
+      "system": false
+    }
+  ],
+  "1150/9030/AK": [],
+  "1160/1040/AL": []
+}

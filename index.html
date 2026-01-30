@@ -24,7 +24,7 @@
   <!-- Header -->
   <header class="header">
     <div class="logo">
-      <div class="swiss-cross"></div>
+      <img src="assets/swiss-logo-flag.svg" alt="Schweizerische Eidgenossenschaft" class="logo-flag">
       <div class="logo-text">
         <div class="logo-text-primary">Bundesamt für Bauten und Logistik</div>
         <div class="logo-text-secondary">Korrekturen Liegenschaftsinventar</div>
@@ -35,7 +35,7 @@
       <button class="nav-tab active" data-tab="karte">Karte</button>
       <button class="nav-tab" data-tab="aufgaben">Aufgaben</button>
       <button class="nav-tab" data-tab="statistik">Statistik</button>
-      <button class="nav-tab" data-tab="handbuch">Handbuch & Downloads</button>
+      <button class="nav-tab" data-tab="handbuch">Einstellungen & Export</button>
     </nav>
 
     <div class="header-actions">
@@ -76,27 +76,98 @@
       <div class="filter-divider"></div>
       <button class="filter-chip" data-filter="my-tasks">Meine Aufgaben</button>
       <div class="filter-divider"></div>
-      <select class="filter-dropdown" id="filter-kanton">
-        <option value="">Kanton</option>
-        <option value="TG">TG</option>
-        <option value="SG">SG</option>
-        <option value="ZH">ZH</option>
-        <option value="BE">BE</option>
-        <option value="GR">GR</option>
-      </select>
-      <select class="filter-dropdown" id="filter-status">
-        <option value="">Status</option>
-        <option value="open">Offen</option>
-        <option value="assigned">Zugewiesen</option>
-        <option value="review">In Prüfung</option>
-        <option value="done">Erledigt</option>
-      </select>
-      <select class="filter-dropdown" id="filter-confidence">
-        <option value="">Konfidenz</option>
-        <option value="critical">Kritisch</option>
-        <option value="warning">Warnung</option>
-        <option value="ok">OK</option>
-      </select>
+
+      <!-- Multi-select: Kanton -->
+      <div class="multi-select" id="filter-kanton">
+        <button class="multi-select-trigger" type="button">
+          <span class="multi-select-label">Kanton</span>
+          <i data-lucide="chevron-down" class="icon-sm"></i>
+        </button>
+        <div class="multi-select-dropdown">
+          <div class="multi-select-actions">
+            <button type="button" class="multi-select-action" data-action="all">Alle</button>
+            <button type="button" class="multi-select-action" data-action="none">Keine</button>
+          </div>
+          <div class="multi-select-options">
+            <label class="multi-select-option"><input type="checkbox" value="TG"><span>TG</span></label>
+            <label class="multi-select-option"><input type="checkbox" value="SG"><span>SG</span></label>
+            <label class="multi-select-option"><input type="checkbox" value="ZH"><span>ZH</span></label>
+            <label class="multi-select-option"><input type="checkbox" value="BE"><span>BE</span></label>
+            <label class="multi-select-option"><input type="checkbox" value="GR"><span>GR</span></label>
+            <label class="multi-select-option"><input type="checkbox" value="LU"><span>LU</span></label>
+            <label class="multi-select-option"><input type="checkbox" value="GE"><span>GE</span></label>
+            <label class="multi-select-option"><input type="checkbox" value="TI"><span>TI</span></label>
+            <label class="multi-select-option"><input type="checkbox" value="BS"><span>BS</span></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Multi-select: Konfidenz -->
+      <div class="multi-select" id="filter-confidence">
+        <button class="multi-select-trigger" type="button">
+          <span class="multi-select-label">Konfidenz</span>
+          <i data-lucide="chevron-down" class="icon-sm"></i>
+        </button>
+        <div class="multi-select-dropdown">
+          <div class="multi-select-actions">
+            <button type="button" class="multi-select-action" data-action="all">Alle</button>
+            <button type="button" class="multi-select-action" data-action="none">Keine</button>
+          </div>
+          <div class="multi-select-options">
+            <label class="multi-select-option"><input type="checkbox" value="critical"><span>Kritisch</span></label>
+            <label class="multi-select-option"><input type="checkbox" value="warning"><span>Warnung</span></label>
+            <label class="multi-select-option"><input type="checkbox" value="ok"><span>OK</span></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Multi-select: Portfolio -->
+      <div class="multi-select" id="filter-portfolio">
+        <button class="multi-select-trigger" type="button">
+          <span class="multi-select-label">Portfolio</span>
+          <i data-lucide="chevron-down" class="icon-sm"></i>
+        </button>
+        <div class="multi-select-dropdown">
+          <div class="multi-select-actions">
+            <button type="button" class="multi-select-action" data-action="all">Alle</button>
+            <button type="button" class="multi-select-action" data-action="none">Keine</button>
+          </div>
+          <div class="multi-select-options">
+            <label class="multi-select-option"><input type="checkbox" value="Büro"><span>Büro</span></label>
+            <label class="multi-select-option"><input type="checkbox" value="Wohnen"><span>Wohnen</span></label>
+            <label class="multi-select-option"><input type="checkbox" value="Öffentlich"><span>Öffentlich</span></label>
+            <label class="multi-select-option"><input type="checkbox" value="Industrie"><span>Industrie</span></label>
+            <label class="multi-select-option"><input type="checkbox" value="Bildung"><span>Bildung</span></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Multi-select: Zugewiesen -->
+      <div class="multi-select" id="filter-assignee">
+        <button class="multi-select-trigger" type="button">
+          <span class="multi-select-label">Zugewiesen</span>
+          <i data-lucide="chevron-down" class="icon-sm"></i>
+        </button>
+        <div class="multi-select-dropdown">
+          <div class="multi-select-actions">
+            <button type="button" class="multi-select-action" data-action="all">Alle</button>
+            <button type="button" class="multi-select-action" data-action="none">Keine</button>
+          </div>
+          <div class="multi-select-options">
+            <label class="multi-select-option"><input type="checkbox" value="M. Keller"><span>M. Keller</span></label>
+            <label class="multi-select-option"><input type="checkbox" value="S. Brunner"><span>S. Brunner</span></label>
+            <label class="multi-select-option"><input type="checkbox" value="T. Weber"><span>T. Weber</span></label>
+            <label class="multi-select-option"><input type="checkbox" value="A. Meier"><span>A. Meier</span></label>
+            <label class="multi-select-option"><input type="checkbox" value=""><span>Nicht zugewiesen</span></label>
+          </div>
+        </div>
+      </div>
+
+      <div class="filter-divider"></div>
+      <button class="filter-reset-btn" id="filter-reset" type="button">
+        <i data-lucide="rotate-ccw" class="icon-sm"></i>
+        <span>Zurücksetzen</span>
+      </button>
     </div>
 
     <!-- Karte Tab -->
@@ -108,14 +179,10 @@
           <div class="map-panel">
             <div id="map"></div>
             <div class="basemap-selector" id="basemap-selector">
-              <button class="basemap-preview" id="basemap-preview">
-                <div class="basemap-preview-img" id="basemap-preview-img"></div>
-                <span class="basemap-preview-label">Hintergrund</span>
-              </button>
-              <div class="basemap-menu" id="basemap-menu">
+              <div class="basemap-panel" id="basemap-panel">
                 <button class="basemap-option" data-basemap="none">
                   <div class="basemap-thumb basemap-none"></div>
-                  <span>Kein Hintergrund</span>
+                  <span>Kein HG</span>
                 </button>
                 <button class="basemap-option" data-basemap="grey">
                   <div class="basemap-thumb basemap-grey"></div>
@@ -130,6 +197,10 @@
                   <span>Luftbild</span>
                 </button>
               </div>
+              <button class="basemap-trigger" id="basemap-trigger" title="Hintergrund wechseln">
+                <div class="basemap-thumb basemap-color" id="basemap-trigger-thumb"></div>
+                <span>Hintergrund</span>
+              </button>
             </div>
             <button class="table-toggle-btn active" id="table-toggle-btn">
               <i data-lucide="chevron-up" class="icon-sm chevron"></i>
@@ -163,7 +234,7 @@
                     <th>Konfidenz</th>
                     <th>Fehlertypen</th>
                     <th>Zugewiesen</th>
-                    <th>Alter</th>
+                    <th>Aktualisiert</th>
                   </tr>
                 </thead>
                 <tbody id="table-body">
@@ -175,100 +246,132 @@
         </div>
 
         <!-- Detail Panel -->
-        <div class="detail-panel">
-          <div class="detail-empty" id="detail-empty">
-            <div class="detail-empty-icon"><i data-lucide="map-pin" class="icon-2xl"></i></div>
-            <div>Objekt auswählen um Details zu sehen</div>
-          </div>
+        <div class="detail-panel" id="detail-panel">
           <div class="detail-content" id="detail-content">
             <div class="detail-header">
+              <button class="detail-close-btn" id="detail-close-btn" title="Schliessen">
+                <i data-lucide="x"></i>
+              </button>
               <h2 class="detail-title" id="detail-title">Building Name</h2>
               <p class="detail-subtitle" id="detail-sap-id">SAP ID</p>
             </div>
 
-            <div class="detail-section">
-              <div class="detail-section-title">Konfidenz</div>
-              <div class="confidence-container">
-                <div class="confidence-total" id="confidence-total">67%</div>
-                <div class="confidence-bars">
-                  <div class="confidence-bar-row">
-                    <span class="confidence-bar-label">Georef</span>
-                    <div class="confidence-bar-track">
-                      <div class="confidence-bar-fill" id="bar-georef" style="width: 67%"></div>
+            <div class="detail-section accordion open" data-accordion="konfidenz">
+              <button class="accordion-header" type="button">
+                <span class="accordion-title">Konfidenz</span>
+                <i data-lucide="chevron-down" class="icon-sm accordion-chevron"></i>
+              </button>
+              <div class="accordion-content">
+                <div class="confidence-container">
+                  <div class="confidence-total" id="confidence-total">67%</div>
+                  <div class="confidence-bars">
+                    <div class="confidence-bar-row">
+                      <span class="confidence-bar-label">Georef</span>
+                      <div class="confidence-bar-track">
+                        <div class="confidence-bar-fill" id="bar-georef" style="width: 67%"></div>
+                      </div>
+                      <span class="confidence-bar-value" id="val-georef">67%</span>
                     </div>
-                    <span class="confidence-bar-value" id="val-georef">67%</span>
-                  </div>
-                  <div class="confidence-bar-row">
-                    <span class="confidence-bar-label">SAP</span>
-                    <div class="confidence-bar-track">
-                      <div class="confidence-bar-fill ok" id="bar-sap" style="width: 100%"></div>
+                    <div class="confidence-bar-row">
+                      <span class="confidence-bar-label">SAP</span>
+                      <div class="confidence-bar-track">
+                        <div class="confidence-bar-fill ok" id="bar-sap" style="width: 100%"></div>
+                      </div>
+                      <span class="confidence-bar-value" id="val-sap">100%</span>
                     </div>
-                    <span class="confidence-bar-value" id="val-sap">100%</span>
-                  </div>
-                  <div class="confidence-bar-row">
-                    <span class="confidence-bar-label">GWR</span>
-                    <div class="confidence-bar-track">
-                      <div class="confidence-bar-fill ok" id="bar-gwr" style="width: 100%"></div>
+                    <div class="confidence-bar-row">
+                      <span class="confidence-bar-label">GWR</span>
+                      <div class="confidence-bar-track">
+                        <div class="confidence-bar-fill ok" id="bar-gwr" style="width: 100%"></div>
+                      </div>
+                      <span class="confidence-bar-value" id="val-gwr">100%</span>
                     </div>
-                    <span class="confidence-bar-value" id="val-gwr">100%</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="detail-section">
-              <div class="detail-section-title">Fehler</div>
-              <div id="error-cards">
-                <!-- Populated by JS -->
-              </div>
-            </div>
-
-            <div class="detail-section">
-              <div class="detail-section-title">Zugewiesen</div>
-              <div class="assignee-display" id="assignee-display">
-                <!-- Populated by JS -->
-              </div>
-            </div>
-
-            <div class="detail-section">
-              <div class="detail-section-title">Datenvergleich</div>
-              <table class="data-table">
-                <thead>
-                  <tr>
-                    <th>Attribut</th>
-                    <th>SAP RE-FX</th>
-                    <th>GWR</th>
-                  </tr>
-                </thead>
-                <tbody id="data-comparison">
+            <div class="detail-section accordion" data-accordion="fehler">
+              <button class="accordion-header" type="button">
+                <span class="accordion-title">Fehler</span>
+                <span class="accordion-count" id="error-count"></span>
+                <i data-lucide="chevron-down" class="icon-sm accordion-chevron"></i>
+              </button>
+              <div class="accordion-content">
+                <div id="error-cards">
                   <!-- Populated by JS -->
-                </tbody>
-              </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="detail-section accordion open" data-accordion="zugewiesen">
+              <button class="accordion-header" type="button">
+                <span class="accordion-title">Zugewiesen</span>
+                <i data-lucide="chevron-down" class="icon-sm accordion-chevron"></i>
+              </button>
+              <div class="accordion-content">
+                <div class="assignee-display" id="assignee-display">
+                  <!-- Populated by JS -->
+                </div>
+              </div>
+            </div>
+
+            <div class="detail-section accordion open" data-accordion="datenvergleich">
+              <button class="accordion-header" type="button">
+                <span class="accordion-title">Datenvergleich</span>
+                <i data-lucide="chevron-down" class="icon-sm accordion-chevron"></i>
+              </button>
+              <div class="accordion-content">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Attribut</th>
+                      <th>SAP RE-FX</th>
+                      <th>GWR</th>
+                    </tr>
+                  </thead>
+                  <tbody id="data-comparison">
+                    <!-- Populated by JS -->
+                  </tbody>
+                </table>
+              </div>
             </div>
 
             <div class="detail-actions">
-              <button class="action-btn primary" id="btn-assign">Zuweisen</button>
               <button class="action-btn secondary" id="btn-correct">Korrigieren</button>
               <button class="action-btn success" id="btn-done">Als erledigt markieren</button>
             </div>
 
-            <div class="detail-section">
-              <div class="detail-section-header">
-                <div class="detail-section-title">Kommentare</div>
-                <button class="add-comment-btn" id="btn-comment">
-                  <i data-lucide="plus" class="icon-sm"></i>
-                  <span>Hinzufügen</span>
-                </button>
-              </div>
-              <div id="comments-list">
-                <!-- Populated by JS -->
+            <div class="detail-section accordion" data-accordion="kommentare">
+              <button class="accordion-header" type="button">
+                <span class="accordion-title">Kommentare</span>
+                <span class="accordion-count" id="comments-count"></span>
+                <i data-lucide="chevron-down" class="icon-sm accordion-chevron"></i>
+              </button>
+              <div class="accordion-content">
+                <div id="comments-list">
+                  <!-- Populated by JS -->
+                </div>
+                <div class="comment-input-section">
+                  <textarea class="comment-input" id="comment-input" placeholder="Kommentar schreiben..." rows="2"></textarea>
+                  <div class="comment-actions">
+                    <button class="action-btn secondary btn-sm" id="btn-cancel-comment" type="button">Abbrechen</button>
+                    <button class="action-btn primary btn-sm" id="btn-submit-comment" type="button">Senden</button>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div class="detail-section">
-              <div class="detail-section-title">Ereignisse</div>
-              <div class="events-list" id="events-list">
-                <!-- Populated by JS -->
+            <div class="detail-section accordion" data-accordion="ereignisse">
+              <button class="accordion-header" type="button">
+                <span class="accordion-title">Ereignisse</span>
+                <span class="accordion-count" id="events-count"></span>
+                <i data-lucide="chevron-down" class="icon-sm accordion-chevron"></i>
+              </button>
+              <div class="accordion-content">
+                <div class="events-list" id="events-list">
+                  <!-- Populated by JS -->
+                </div>
               </div>
             </div>
           </div>
@@ -331,13 +434,6 @@
             <div class="kanban-cards" id="kanban-done">
               <!-- Populated by JS -->
             </div>
-          </div>
-        </div>
-
-        <div class="team-overview">
-          <h3 class="team-overview-title">Team Übersicht</h3>
-          <div class="team-cards" id="team-cards">
-            <!-- Populated by JS -->
           </div>
         </div>
       </div>
@@ -428,58 +524,102 @@
       </div>
     </div>
 
-    <!-- Handbuch Tab -->
+    <!-- Einstellungen & Export Tab -->
     <div class="tab-content" id="tab-handbuch">
       <div class="handbuch-content">
+        <!-- User Management Section -->
         <div class="handbuch-section">
-          <h2 class="handbuch-section-title section-title-icon"><i data-lucide="book-open" class="icon-lg"></i> Handbuch</h2>
-          <ul class="doc-tree">
-            <li class="doc-item">
-              <div class="doc-item-header" onclick="toggleDocItem(this)">
-                <span class="doc-item-icon">▸</span>
-                <span class="doc-item-title">Einführung</span>
-              </div>
-            </li>
-            <li class="doc-item">
-              <div class="doc-item-header" onclick="toggleDocItem(this)">
-                <span class="doc-item-icon">▸</span>
-                <span class="doc-item-title">Fehlertypen verstehen</span>
-              </div>
-              <ul class="doc-children">
-                <li class="doc-item">
-                  <div class="doc-item-header">
-                    <span class="doc-item-title">Georeferenzierung</span>
-                  </div>
-                </li>
-                <li class="doc-item">
-                  <div class="doc-item-header">
-                    <span class="doc-item-title">SAP Stammdaten</span>
-                  </div>
-                </li>
-                <li class="doc-item">
-                  <div class="doc-item-header">
-                    <span class="doc-item-title">GWR Abgleich</span>
-                  </div>
-                </li>
-              </ul>
-            </li>
-            <li class="doc-item">
-              <div class="doc-item-header" onclick="toggleDocItem(this)">
-                <span class="doc-item-icon">▸</span>
-                <span class="doc-item-title">Korrektur-Workflow</span>
-              </div>
-            </li>
-            <li class="doc-item">
-              <div class="doc-item-header" onclick="toggleDocItem(this)">
-                <span class="doc-item-icon">▸</span>
-                <span class="doc-item-title">Häufige Fragen (FAQ)</span>
-              </div>
-            </li>
-          </ul>
+          <h2 class="handbuch-section-title section-title-icon"><i data-lucide="users" class="icon-lg"></i> Benutzerverwaltung</h2>
+          <div class="user-management">
+            <div class="user-actions">
+              <button class="action-btn primary" onclick="openModal('modal-invite-user')">
+                <i data-lucide="user-plus" class="icon-sm"></i>
+                Benutzer einladen
+              </button>
+            </div>
+            <table class="users-table">
+              <thead>
+                <tr>
+                  <th>Benutzer</th>
+                  <th>Rolle</th>
+                  <th>Status</th>
+                  <th>Aktionen</th>
+                </tr>
+              </thead>
+              <tbody id="users-table-body">
+                <tr>
+                  <td>
+                    <div class="user-cell">
+                      <div class="user-avatar">MK</div>
+                      <div class="user-details">
+                        <span class="user-name">M. Keller</span>
+                        <span class="user-email">m.keller@bbl.admin.ch</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="badge badge-ok">Admin</span></td>
+                  <td><span class="status-indicator active">Aktiv</span></td>
+                  <td><button class="icon-btn" title="Bearbeiten"><i data-lucide="pencil" class="icon-sm"></i></button></td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="user-cell">
+                      <div class="user-avatar">SB</div>
+                      <div class="user-details">
+                        <span class="user-name">S. Brunner</span>
+                        <span class="user-email">s.brunner@bbl.admin.ch</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="badge badge-warning">Bearbeiter</span></td>
+                  <td><span class="status-indicator active">Aktiv</span></td>
+                  <td>
+                    <button class="icon-btn" title="Bearbeiten"><i data-lucide="pencil" class="icon-sm"></i></button>
+                    <button class="icon-btn danger" title="Entfernen"><i data-lucide="trash-2" class="icon-sm"></i></button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="user-cell">
+                      <div class="user-avatar">TW</div>
+                      <div class="user-details">
+                        <span class="user-name">T. Weber</span>
+                        <span class="user-email">t.weber@bbl.admin.ch</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="badge badge-warning">Bearbeiter</span></td>
+                  <td><span class="status-indicator active">Aktiv</span></td>
+                  <td>
+                    <button class="icon-btn" title="Bearbeiten"><i data-lucide="pencil" class="icon-sm"></i></button>
+                    <button class="icon-btn danger" title="Entfernen"><i data-lucide="trash-2" class="icon-sm"></i></button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="user-cell">
+                      <div class="user-avatar">AM</div>
+                      <div class="user-details">
+                        <span class="user-name">A. Meier</span>
+                        <span class="user-email">a.meier@bbl.admin.ch</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="badge badge-georef">Leser</span></td>
+                  <td><span class="status-indicator pending">Eingeladen</span></td>
+                  <td>
+                    <button class="icon-btn" title="Erneut einladen"><i data-lucide="mail" class="icon-sm"></i></button>
+                    <button class="icon-btn danger" title="Entfernen"><i data-lucide="trash-2" class="icon-sm"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
 
+        <!-- Export Section -->
         <div class="handbuch-section">
-          <h2 class="handbuch-section-title section-title-icon"><i data-lucide="download" class="icon-lg"></i> Downloads</h2>
+          <h2 class="handbuch-section-title section-title-icon"><i data-lucide="download" class="icon-lg"></i> Export</h2>
           <table class="downloads-table">
             <tr>
               <td class="download-name">Checkliste Vor-Ort-Prüfung</td>
@@ -521,28 +661,6 @@
       </div>
     </div>
   </main>
-
-  <!-- Assignment Modal -->
-  <div class="modal-overlay" id="modal-assign">
-    <div class="modal">
-      <div class="modal-header">
-        <h3 class="modal-title">Aufgabe zuweisen</h3>
-        <button class="modal-close" onclick="closeModal('modal-assign')">×</button>
-      </div>
-      <div class="modal-body">
-        <p class="modal-description">Wählen Sie einen Teamkollegen:</p>
-        <div class="team-select" id="team-select">
-          <!-- Populated by JS -->
-        </div>
-        <label class="modal-label">Notiz (optional):</label>
-        <textarea class="modal-textarea" placeholder="Zusätzliche Hinweise..."></textarea>
-      </div>
-      <div class="modal-footer">
-        <button class="modal-btn cancel" onclick="closeModal('modal-assign')">Abbrechen</button>
-        <button class="modal-btn primary" onclick="assignTask()">Zuweisen</button>
-      </div>
-    </div>
-  </div>
 
   <!-- Correction Modal -->
   <div class="modal-overlay" id="modal-correct">
@@ -601,6 +719,55 @@
     </div>
   </div>
 
+  <!-- Invite User Modal -->
+  <div class="modal-overlay" id="modal-invite-user">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">Benutzer einladen</h3>
+        <button class="modal-close" onclick="closeModal('modal-invite-user')">×</button>
+      </div>
+      <div class="modal-body">
+        <label class="modal-label">E-Mail-Adresse</label>
+        <input type="email" class="modal-input" placeholder="name@bbl.admin.ch">
+
+        <label class="modal-label">Rolle</label>
+        <select class="modal-select">
+          <option value="reader">Leser - Nur Ansicht</option>
+          <option value="editor" selected>Bearbeiter - Kann Daten bearbeiten</option>
+          <option value="admin">Admin - Voller Zugriff</option>
+        </select>
+
+        <label class="modal-label">Nachricht (optional)</label>
+        <textarea class="modal-textarea" placeholder="Persönliche Nachricht zur Einladung..."></textarea>
+      </div>
+      <div class="modal-footer">
+        <button class="modal-btn cancel" onclick="closeModal('modal-invite-user')">Abbrechen</button>
+        <button class="modal-btn primary">Einladung senden</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Map Context Menu (Right-Click) -->
+  <div id="map-context-menu" class="map-context-menu">
+    <div class="context-menu-item context-menu-coords" id="context-menu-coords" title="Klicken zum Kopieren">
+      <i data-lucide="copy" class="icon-sm"></i>
+      <span id="context-menu-coords-text">47.37623, 8.53048</span>
+    </div>
+    <div class="context-menu-divider"></div>
+    <div class="context-menu-item" id="context-menu-share">
+      <i data-lucide="share-2" class="icon-sm"></i>
+      <span>Teilen</span>
+    </div>
+    <div class="context-menu-item" id="context-menu-center">
+      <i data-lucide="crosshair" class="icon-sm"></i>
+      <span>Hier zentrieren</span>
+    </div>
+    <div class="context-menu-item" id="context-menu-nearest">
+      <i data-lucide="map-pin" class="icon-sm"></i>
+      <span>Nächstes Objekt</span>
+    </div>
+  </div>
+
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
@@ -611,24 +778,36 @@
     let teamMembers = [];
     let buildings = [];
     let events = [];
+    let errors = {};
+    let comments = {};
 
     async function loadData() {
       try {
-        const [buildingsResponse, teamResponse, eventsResponse] = await Promise.all([
+        const [buildingsResponse, teamResponse, eventsResponse, errorsResponse, commentsResponse] = await Promise.all([
           fetch('data/buildings.json'),
           fetch('data/team.json'),
-          fetch('data/events.json')
+          fetch('data/events.json'),
+          fetch('data/errors.json'),
+          fetch('data/comments.json')
         ]);
 
-        if (!buildingsResponse.ok || !teamResponse.ok || !eventsResponse.ok) {
+        if (!buildingsResponse.ok || !teamResponse.ok || !eventsResponse.ok || !errorsResponse.ok || !commentsResponse.ok) {
           throw new Error('Failed to load data files');
         }
 
         buildings = await buildingsResponse.json();
         teamMembers = await teamResponse.json();
         events = await eventsResponse.json();
+        errors = await errorsResponse.json();
+        comments = await commentsResponse.json();
 
-        console.log(`Loaded ${buildings.length} buildings, ${teamMembers.length} team members, ${events.length} events`);
+        // Merge errors and comments into buildings
+        buildings.forEach(building => {
+          building.errors = errors[building.id] || [];
+          building.comments = comments[building.id] || [];
+        });
+
+        console.log(`Loaded ${buildings.length} buildings, ${teamMembers.length} team members, ${events.length} events, ${Object.keys(errors).length} error sets, ${Object.keys(comments).length} comment sets`);
       } catch (error) {
         console.error('Error loading data:', error);
         // Show error to user
@@ -654,11 +833,11 @@
         low: true,
         myTasks: false
       },
-      filterKanton: '',
-      filterStatus: '',
-      filterConfidence: '',
-      currentTab: 'karte',
-      selectedTeamMember: null
+      filterKanton: [],      // Empty array = show all
+      filterConfidence: [],  // Empty array = show all
+      filterPortfolio: [],   // Empty array = show all
+      filterAssignee: [],    // Empty array = show all
+      currentTab: 'karte'
     };
 
     let map;
@@ -691,9 +870,10 @@
       }
 
       // Add dropdown filters
-      if (state.filterKanton) params.set('kanton', state.filterKanton);
-      if (state.filterStatus) params.set('status', state.filterStatus);
-      if (state.filterConfidence) params.set('confidence', state.filterConfidence);
+      if (state.filterKanton.length > 0) params.set('kanton', state.filterKanton.join(','));
+      if (state.filterConfidence.length > 0) params.set('confidence', state.filterConfidence.join(','));
+      if (state.filterPortfolio.length > 0) params.set('portfolio', state.filterPortfolio.join(','));
+      if (state.filterAssignee.length > 0) params.set('assignee', state.filterAssignee.join(','));
 
       // Add table visibility (only add param if hidden, since visible is default)
       if (!tableVisible) params.set('table', '0');
@@ -739,10 +919,15 @@
         });
       }
 
-      // Parse dropdown filters
-      state.filterKanton = params.get('kanton') || '';
-      state.filterStatus = params.get('status') || '';
-      state.filterConfidence = params.get('confidence') || '';
+      // Parse dropdown filters (comma-separated values, empty = show all)
+      const kantonParam = params.get('kanton');
+      const confidenceParam = params.get('confidence');
+      const portfolioParam = params.get('portfolio');
+      const assigneeParam = params.get('assignee');
+      state.filterKanton = kantonParam ? kantonParam.split(',') : [];
+      state.filterConfidence = confidenceParam ? confidenceParam.split(',') : [];
+      state.filterPortfolio = portfolioParam ? portfolioParam.split(',') : [];
+      state.filterAssignee = assigneeParam ? assigneeParam.split(',') : [];
 
       // Return table visibility (default is visible, so check for explicit hide)
       return params.get('table') !== '0';
@@ -769,10 +954,11 @@
         }
       });
 
-      // Apply dropdown filters
-      document.getElementById('filter-kanton').value = state.filterKanton;
-      document.getElementById('filter-status').value = state.filterStatus;
-      document.getElementById('filter-confidence').value = state.filterConfidence;
+      // Apply multi-select filter checkboxes
+      applyMultiSelectState('filter-kanton', state.filterKanton);
+      applyMultiSelectState('filter-confidence', state.filterConfidence);
+      applyMultiSelectState('filter-portfolio', state.filterPortfolio);
+      applyMultiSelectState('filter-assignee', state.filterAssignee);
 
       // Apply table visibility (default is visible)
       tableVisible = shouldShowTable;
@@ -789,9 +975,10 @@
         state.currentTab = event.state.currentTab || 'karte';
         state.selectedBuildingId = event.state.selectedBuildingId || null;
         state.activeFilters = event.state.activeFilters || { high: true, medium: true, low: true, myTasks: false };
-        state.filterKanton = event.state.filterKanton || '';
-        state.filterStatus = event.state.filterStatus || '';
-        state.filterConfidence = event.state.filterConfidence || '';
+        state.filterKanton = event.state.filterKanton || [];
+        state.filterConfidence = event.state.filterConfidence || [];
+        state.filterPortfolio = event.state.filterPortfolio || [];
+        state.filterAssignee = event.state.filterAssignee || [];
         tableVisible = event.state.tableVisible !== undefined ? event.state.tableVisible : true;
 
         // Apply tab
@@ -812,10 +999,11 @@
           }
         });
 
-        // Update dropdowns
-        document.getElementById('filter-kanton').value = state.filterKanton;
-        document.getElementById('filter-status').value = state.filterStatus;
-        document.getElementById('filter-confidence').value = state.filterConfidence;
+        // Update multi-select dropdowns
+        applyMultiSelectState('filter-kanton', state.filterKanton);
+        applyMultiSelectState('filter-confidence', state.filterConfidence);
+        applyMultiSelectState('filter-portfolio', state.filterPortfolio);
+        applyMultiSelectState('filter-assignee', state.filterAssignee);
 
         // Update table visibility
         document.getElementById('table-panel').classList.toggle('visible', tableVisible);
@@ -875,14 +1063,14 @@
       applyURLState();
 
       renderKanbanBoard();
-      renderTeamOverview();
-      renderTeamSelect();
       setupEventListeners();
       setupTableViewListeners();
       setupExpandingSearch();
       setupFilterToggle();
       setupTableResize();
       setupBasemapSelector();
+      setupContextMenu();
+      setupAccordions();
       updateCounts();
 
       // Apply building selection from URL after rendering
@@ -903,10 +1091,8 @@
       // Add zoom control to top-right
       L.control.zoom({ position: 'topright' }).addTo(map);
 
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-        attribution: '© OpenStreetMap contributors © CARTO',
-        maxZoom: 19
-      }).addTo(map);
+      // Initialize with default basemap (color)
+      switchBasemapTiles(currentBasemap);
 
       buildings.forEach(building => {
         const marker = createMarker(building);
@@ -932,14 +1118,23 @@
     // Rendering Functions
     // ========================================
     function renderDetailPanel(building) {
+      const detailPanel = document.getElementById('detail-panel');
+      const wasVisible = detailPanel.classList.contains('visible');
+
       if (!building) {
-        document.getElementById('detail-empty').style.display = 'flex';
-        document.getElementById('detail-content').classList.remove('visible');
+        detailPanel.classList.remove('visible');
+        // Resize map after panel hides
+        if (wasVisible && map) {
+          setTimeout(() => map.invalidateSize(), 10);
+        }
         return;
       }
 
-      document.getElementById('detail-empty').style.display = 'none';
-      document.getElementById('detail-content').classList.add('visible');
+      detailPanel.classList.add('visible');
+      // Resize map after panel shows
+      if (!wasVisible && map) {
+        setTimeout(() => map.invalidateSize(), 10);
+      }
 
       document.getElementById('detail-title').textContent = building.name;
       document.getElementById('detail-sap-id').textContent = building.id;
@@ -963,13 +1158,26 @@
         ? building.errors.map(error => `
             <div class="error-card ${error.severity}">
               <div class="error-card-header">
-                <span class="tag ${error.type}">${getTagLabel(error.type)}</span>
+                <span class="badge badge-${error.type} badge-caps badge-sm">${getTagLabel(error.type)}</span>
                 <span class="error-card-title">${error.title}</span>
               </div>
               <div class="error-card-desc">${error.description}</div>
             </div>
           `).join('')
         : '<p class="empty-text">Keine Fehler gefunden.</p>';
+
+      // Update error count badge and auto-expand if errors
+      const errorCountEl = document.getElementById('error-count');
+      const fehlerAccordion = document.querySelector('[data-accordion="fehler"]');
+      if (building.errors.length > 0) {
+        errorCountEl.textContent = building.errors.length;
+        errorCountEl.style.display = '';
+        // Auto-expand errors section when there are errors
+        fehlerAccordion.classList.add('open');
+      } else {
+        errorCountEl.style.display = 'none';
+        fehlerAccordion.classList.remove('open');
+      }
 
       // Data comparison
       document.getElementById('data-comparison').innerHTML = Object.entries(building.data).map(([key, val]) => `
@@ -993,6 +1201,15 @@
           `).join('')
         : '<p class="empty-text">Keine Kommentare.</p>';
 
+      // Update comments count badge
+      const commentsCountEl = document.getElementById('comments-count');
+      if (building.comments.length > 0) {
+        commentsCountEl.textContent = building.comments.length;
+        commentsCountEl.style.display = '';
+      } else {
+        commentsCountEl.style.display = 'none';
+      }
+
       // Assignee
       renderAssigneeDisplay(building);
 
@@ -1005,42 +1222,123 @@
 
     function renderAssigneeDisplay(building) {
       const container = document.getElementById('assignee-display');
+      const currentAssignee = building.assignee;
+      const member = currentAssignee ? teamMembers.find(m => m.name === currentAssignee) : null;
 
-      if (!building.assignee) {
-        container.innerHTML = '<div class="assignee-empty">Noch nicht zugewiesen</div>';
-        return;
-      }
-
-      // Find team member by name
-      const member = teamMembers.find(m => m.name === building.assignee);
-
-      if (member) {
-        container.innerHTML = `
-          <div class="assignee-card">
-            <div class="assignee-avatar">${member.initials}</div>
-            <div class="assignee-info">
-              <div class="assignee-name">${member.name}</div>
-              <div class="assignee-role">${member.role}</div>
-            </div>
+      // Build trigger content
+      let triggerContent;
+      if (currentAssignee) {
+        const initials = member ? member.initials : currentAssignee.split(' ').map(n => n[0]).join('');
+        const role = member ? member.role : '';
+        triggerContent = `
+          <div class="assignee-avatar">${initials}</div>
+          <div class="assignee-info">
+            <div class="assignee-name">${currentAssignee}</div>
+            ${role ? `<div class="assignee-role">${role}</div>` : ''}
           </div>
         `;
       } else {
-        container.innerHTML = `
-          <div class="assignee-card">
-            <div class="assignee-avatar">${building.assignee.split(' ').map(n => n[0]).join('')}</div>
-            <div class="assignee-info">
-              <div class="assignee-name">${building.assignee}</div>
-            </div>
+        triggerContent = `
+          <div class="assignee-avatar empty"><i data-lucide="user" class="icon-sm"></i></div>
+          <div class="assignee-info">
+            <span class="assignee-empty-text">Zuweisen...</span>
           </div>
         `;
+      }
+
+      // Build dropdown options
+      const options = teamMembers.map(m => `
+        <button class="assignee-option ${currentAssignee === m.name ? 'selected' : ''}" data-assignee="${m.name}">
+          <div class="assignee-avatar">${m.initials}</div>
+          <div class="assignee-option-info">
+            <div class="assignee-option-name">${m.name}</div>
+            <div class="assignee-option-role">${m.role}</div>
+          </div>
+          <i data-lucide="check" class="icon-sm assignee-option-check"></i>
+        </button>
+      `).join('');
+
+      // Add unassign option if currently assigned
+      const unassignOption = currentAssignee ? `
+        <div class="assignee-divider"></div>
+        <button class="assignee-option unassign" data-assignee="">
+          <div class="assignee-avatar empty"><i data-lucide="user-minus" class="icon-sm"></i></div>
+          <div class="assignee-option-info">
+            <div class="assignee-option-name">Zuweisung aufheben</div>
+          </div>
+        </button>
+      ` : '';
+
+      container.innerHTML = `
+        <button class="assignee-trigger" type="button">
+          ${triggerContent}
+          <i data-lucide="chevron-down" class="icon-sm assignee-chevron"></i>
+        </button>
+        <div class="assignee-dropdown">
+          ${options}
+          ${unassignOption}
+        </div>
+      `;
+
+      // Setup event listeners
+      const trigger = container.querySelector('.assignee-trigger');
+      const dropdown = container.querySelector('.assignee-dropdown');
+
+      trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        container.classList.toggle('open');
+      });
+
+      // Handle option selection
+      container.querySelectorAll('.assignee-option').forEach(option => {
+        option.addEventListener('click', () => {
+          const newAssignee = option.dataset.assignee || null;
+          assignBuilding(building.id, newAssignee);
+          container.classList.remove('open');
+        });
+      });
+
+      // Close on outside click
+      document.addEventListener('click', (e) => {
+        if (!container.contains(e.target)) {
+          container.classList.remove('open');
+        }
+      }, { once: true });
+
+      // Refresh Lucide icons
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+
+    function assignBuilding(buildingId, assigneeName) {
+      // Find building and update
+      const building = buildings.find(b => b.id === buildingId);
+      if (building) {
+        building.assignee = assigneeName;
+        building.lastUpdate = new Date().toISOString();
+        building.lastUpdateBy = 'M. Keller'; // Current user
+
+        // Re-render
+        renderAssigneeDisplay(building);
+        renderKanbanBoard();
+        if (tableVisible) renderTableView();
+        updateCounts();
       }
     }
 
     function renderEventsLog(buildingId) {
       const container = document.getElementById('events-list');
+      const eventsCountEl = document.getElementById('events-count');
       const buildingEvents = events
         .filter(e => e.buildingId === buildingId)
         .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+      // Update events count badge
+      if (buildingEvents.length > 0) {
+        eventsCountEl.textContent = buildingEvents.length;
+        eventsCountEl.style.display = '';
+      } else {
+        eventsCountEl.style.display = 'none';
+      }
 
       if (buildingEvents.length === 0) {
         container.innerHTML = '<p class="empty-text">Keine Ereignisse.</p>';
@@ -1107,12 +1405,12 @@
           <div class="kanban-card ${building.priority}" onclick="selectBuildingAndSwitch('${building.id}')">
             <div class="kanban-card-name">${building.name}</div>
             <div class="kanban-card-sap-id">${building.id}</div>
-            <div class="kanban-card-tags">
-              ${building.tags.map(tag => `<span class="tag ${tag}">${getTagLabel(tag)}</span>`).join('')}
+            <div class="badge-group">
+              ${building.errors.map(err => `<span class="badge badge-${err.type} badge-caps badge-sm">${getTagLabel(err.type)}</span>`).join('')}
             </div>
             <div class="kanban-card-meta">
               <span>${building.assignee || 'Nicht zugewiesen'}</span>
-              <span class="meta-icon"><i data-lucide="clock" class="icon-sm"></i> ${building.age}</span>
+              <span class="meta-icon" title="${formatDateTime(building.lastUpdate)} von ${building.lastUpdateBy || '—'}"><i data-lucide="clock" class="icon-sm"></i> ${formatRelativeTime(building.lastUpdate)}</span>
             </div>
           </div>
         `).join('');
@@ -1128,38 +1426,6 @@
       if (typeof lucide !== 'undefined') lucide.createIcons();
     }
 
-    function renderTeamOverview() {
-      const container = document.getElementById('team-cards');
-      container.innerHTML = teamMembers.map(member => `
-        <div class="team-card">
-          <div class="team-card-header">
-            <div class="team-avatar">${member.initials}</div>
-            <div class="team-name">${member.name}</div>
-          </div>
-          <div class="team-role">${member.role}</div>
-          <div class="team-workload">
-            ${Array(member.openTasks).fill('<div class="workload-dot" style="background: var(--status-warning)"></div>').join('')}
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function renderTeamSelect() {
-      const container = document.getElementById('team-select');
-      container.innerHTML = teamMembers.map(member => `
-        <label class="team-select-option ${state.selectedTeamMember === member.id ? 'selected' : ''}"
-               onclick="selectTeamMember(${member.id})">
-          <input type="radio" name="team" value="${member.id}">
-          <div class="team-select-radio"></div>
-          <div class="team-avatar">${member.initials}</div>
-          <div class="team-select-info">
-            <div class="team-select-name">${member.name}</div>
-            <div class="team-select-role">${member.role}</div>
-          </div>
-        </label>
-      `).join('');
-    }
-
     // ========================================
     // Event Handlers
     // ========================================
@@ -1169,26 +1435,25 @@
         tab.addEventListener('click', () => switchTab(tab.dataset.tab));
       });
 
+      // Detail panel close button
+      document.getElementById('detail-close-btn').addEventListener('click', () => {
+        state.selectedBuildingId = null;
+        renderDetailPanel(null);
+        // Deselect marker
+        Object.values(markers).forEach(m => m.getElement()?.classList.remove('selected'));
+        updateURL();
+      });
+
       // Filter chips
       document.querySelectorAll('.filter-chip[data-filter]').forEach(chip => {
         chip.addEventListener('click', () => toggleFilter(chip.dataset.filter));
       });
 
-      // Dropdown filters
-      document.getElementById('filter-kanton').addEventListener('change', (e) => {
-        state.filterKanton = e.target.value;
-        applyFilters();
-      });
-
-      document.getElementById('filter-status').addEventListener('change', (e) => {
-        state.filterStatus = e.target.value;
-        applyFilters();
-      });
-
-      document.getElementById('filter-confidence').addEventListener('change', (e) => {
-        state.filterConfidence = e.target.value;
-        applyFilters();
-      });
+      // Multi-select filter dropdowns
+      setupMultiSelectFilter('filter-kanton', 'filterKanton');
+      setupMultiSelectFilter('filter-confidence', 'filterConfidence');
+      setupMultiSelectFilter('filter-portfolio', 'filterPortfolio');
+      setupMultiSelectFilter('filter-assignee', 'filterAssignee');
 
       // Basemap selector
       document.querySelectorAll('.basemap-btn').forEach(btn => {
@@ -1196,7 +1461,6 @@
       });
 
       // Action buttons
-      document.getElementById('btn-assign').addEventListener('click', () => openModal('modal-assign'));
       document.getElementById('btn-correct').addEventListener('click', () => openModal('modal-correct'));
 
       // Global search
@@ -1222,6 +1486,43 @@
           }
         });
       });
+
+      // Comment input handlers
+      document.getElementById('btn-submit-comment').addEventListener('click', submitComment);
+      document.getElementById('btn-cancel-comment').addEventListener('click', cancelComment);
+      document.getElementById('comment-input').addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+          submitComment();
+        }
+      });
+    }
+
+    function submitComment() {
+      const input = document.getElementById('comment-input');
+      const text = input.value.trim();
+      if (!text || !state.selectedBuildingId) return;
+
+      const building = buildings.find(b => b.id === state.selectedBuildingId);
+      if (!building) return;
+
+      // Add new comment
+      const newComment = {
+        author: 'M. Keller',
+        date: new Date().toLocaleDateString('de-CH'),
+        text: text,
+        system: false
+      };
+      building.comments.push(newComment);
+      building.lastUpdate = new Date().toISOString();
+      building.lastUpdateBy = 'M. Keller';
+
+      // Clear input and re-render
+      input.value = '';
+      renderDetailPanel(building);
+    }
+
+    function cancelComment() {
+      document.getElementById('comment-input').value = '';
     }
 
     function switchTab(tabId, shouldUpdateURL = true) {
@@ -1297,6 +1598,111 @@
       applyFilters(shouldUpdateURL);
     }
 
+    function setupMultiSelectFilter(elementId, stateKey) {
+      const container = document.getElementById(elementId);
+      const trigger = container.querySelector('.multi-select-trigger');
+      const dropdown = container.querySelector('.multi-select-dropdown');
+      const checkboxes = container.querySelectorAll('input[type="checkbox"]');
+      const allBtn = container.querySelector('[data-action="all"]');
+      const noneBtn = container.querySelector('[data-action="none"]');
+      const label = container.querySelector('.multi-select-label');
+
+      // Toggle dropdown
+      trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        // Close other dropdowns
+        document.querySelectorAll('.multi-select.open').forEach(el => {
+          if (el !== container) el.classList.remove('open');
+        });
+        container.classList.toggle('open');
+      });
+
+      // Close on outside click
+      document.addEventListener('click', (e) => {
+        if (!container.contains(e.target)) {
+          container.classList.remove('open');
+        }
+      });
+
+      // Checkbox change
+      checkboxes.forEach(cb => {
+        cb.addEventListener('change', () => {
+          updateMultiSelectState();
+        });
+      });
+
+      // Select all
+      allBtn.addEventListener('click', () => {
+        checkboxes.forEach(cb => cb.checked = true);
+        updateMultiSelectState();
+      });
+
+      // Select none
+      noneBtn.addEventListener('click', () => {
+        checkboxes.forEach(cb => cb.checked = false);
+        updateMultiSelectState();
+      });
+
+      function updateMultiSelectState() {
+        const selected = Array.from(checkboxes).filter(cb => cb.checked).map(cb => cb.value);
+        state[stateKey] = selected.length === checkboxes.length ? [] : selected;
+        updateLabel();
+        applyFilters();
+      }
+
+      function updateLabel() {
+        const selected = Array.from(checkboxes).filter(cb => cb.checked);
+        if (selected.length === 0) {
+          label.textContent = label.dataset.default || elementId.replace('filter-', '');
+          label.classList.add('none-selected');
+        } else if (selected.length === checkboxes.length) {
+          label.textContent = label.dataset.default || elementId.replace('filter-', '');
+          label.classList.remove('none-selected');
+        } else if (selected.length === 1) {
+          label.textContent = selected[0].nextElementSibling.textContent;
+          label.classList.remove('none-selected');
+        } else {
+          label.textContent = `${selected.length} ausgewählt`;
+          label.classList.remove('none-selected');
+        }
+      }
+
+      // Initialize: all checked by default
+      checkboxes.forEach(cb => cb.checked = true);
+      label.dataset.default = label.textContent;
+    }
+
+    function applyMultiSelectState(elementId, selectedValues) {
+      const container = document.getElementById(elementId);
+      if (!container) return;
+
+      const checkboxes = container.querySelectorAll('input[type="checkbox"]');
+      const label = container.querySelector('.multi-select-label');
+
+      // If empty array, check all (show all)
+      if (selectedValues.length === 0) {
+        checkboxes.forEach(cb => cb.checked = true);
+        if (label && label.dataset.default) {
+          label.textContent = label.dataset.default;
+        }
+      } else {
+        // Check only selected values
+        checkboxes.forEach(cb => {
+          cb.checked = selectedValues.includes(cb.value);
+        });
+        // Update label
+        if (label) {
+          const checkedCount = selectedValues.length;
+          if (checkedCount === 1) {
+            const cb = Array.from(checkboxes).find(cb => cb.value === selectedValues[0]);
+            label.textContent = cb ? cb.nextElementSibling.textContent : selectedValues[0];
+          } else {
+            label.textContent = `${checkedCount} ausgewählt`;
+          }
+        }
+      }
+    }
+
     function applyFilters(shouldUpdateURL = true) {
       updateMapMarkers();
       updateCounts();
@@ -1323,22 +1729,27 @@
           return false;
         }
 
-        // Kanton filter
-        if (state.filterKanton && building.kanton !== state.filterKanton) {
+        // Kanton filter (empty array = show all)
+        if (state.filterKanton.length > 0 && !state.filterKanton.includes(building.kanton)) {
           return false;
         }
 
-        // Status filter
-        if (state.filterStatus && building.kanbanStatus !== state.filterStatus) {
-          return false;
-        }
-
-        // Confidence filter
-        if (state.filterConfidence) {
+        // Confidence filter (empty array = show all)
+        if (state.filterConfidence.length > 0) {
           const conf = building.confidence.total;
-          if (state.filterConfidence === 'critical' && conf >= 50) return false;
-          if (state.filterConfidence === 'warning' && (conf < 50 || conf >= 80)) return false;
-          if (state.filterConfidence === 'ok' && conf < 80) return false;
+          const confLevel = conf < 50 ? 'critical' : conf < 80 ? 'warning' : 'ok';
+          if (!state.filterConfidence.includes(confLevel)) return false;
+        }
+
+        // Portfolio filter (empty array = show all)
+        if (state.filterPortfolio.length > 0 && !state.filterPortfolio.includes(building.portfolio)) {
+          return false;
+        }
+
+        // Assignee filter (empty array = show all, empty string matches unassigned)
+        if (state.filterAssignee.length > 0) {
+          const assignee = building.assignee || '';
+          if (!state.filterAssignee.includes(assignee)) return false;
         }
 
         return true;
@@ -1411,28 +1822,6 @@
       document.getElementById(modalId).classList.remove('active');
     }
 
-    function selectTeamMember(id) {
-      state.selectedTeamMember = id;
-      renderTeamSelect();
-    }
-
-    function assignTask() {
-      if (!state.selectedTeamMember || !state.selectedBuildingId) return;
-
-      const building = buildings.find(b => b.id === state.selectedBuildingId);
-      const member = teamMembers.find(m => m.id === state.selectedTeamMember);
-
-      if (building && member) {
-        building.assignee = member.name;
-        building.kanbanStatus = 'assigned';
-
-        closeModal('modal-assign');
-        renderDetailPanel(building);
-        if (tableVisible) renderTableView();
-        renderKanbanBoard();
-      }
-    }
-
     // ========================================
     // Handbuch Functions
     // ========================================
@@ -1464,11 +1853,41 @@
       const labels = {
         address: 'Adresse',
         plz: 'PLZ',
-        coords: 'Koordinaten',
+        coords: 'Koordinaten (WGS 84)',
         egid: 'EGID',
         year: 'Baujahr'
       };
       return labels[key] || key;
+    }
+
+    function formatRelativeTime(isoString) {
+      if (!isoString) return '—';
+      const date = new Date(isoString);
+      const now = new Date();
+      const diffMs = now - date;
+      const diffMins = Math.floor(diffMs / 60000);
+      const diffHours = Math.floor(diffMs / 3600000);
+      const diffDays = Math.floor(diffMs / 86400000);
+
+      if (diffMins < 1) return 'Gerade eben';
+      if (diffMins < 60) return `vor ${diffMins} Min.`;
+      if (diffHours < 24) return `vor ${diffHours} Std.`;
+      if (diffDays === 1) return 'Gestern';
+      if (diffDays < 7) return `vor ${diffDays} Tagen`;
+      if (diffDays < 30) return `vor ${Math.floor(diffDays / 7)} Wochen`;
+      return date.toLocaleDateString('de-CH');
+    }
+
+    function formatDateTime(isoString) {
+      if (!isoString) return '—';
+      const date = new Date(isoString);
+      return date.toLocaleString('de-CH', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
     }
 
     // ========================================
@@ -1509,22 +1928,22 @@
       const filteredBuildings = getFilteredBuildings();
       const tbody = document.getElementById('table-body');
 
-      const priorityLabels = {
-        high: 'Hoch',
-        medium: 'Mittel',
-        low: 'Niedrig'
+      const priorityConfig = {
+        high: { label: 'Hoch', badge: 'badge-critical' },
+        medium: { label: 'Mittel', badge: 'badge-warning' },
+        low: { label: 'Niedrig', badge: 'badge-ok' }
       };
 
-      tbody.innerHTML = filteredBuildings.map(building => `
+      tbody.innerHTML = filteredBuildings.map(building => {
+        const priority = priorityConfig[building.priority] || { label: building.priority, badge: '' };
+        return `
         <tr class="${state.selectedBuildingId === building.id ? 'selected' : ''}"
             onclick="selectBuilding('${building.id}')">
           <td>
-            <span class="priority-pill ${building.priority}">
-              ${priorityLabels[building.priority] || building.priority}
-            </span>
+            <span class="badge ${priority.badge}">${priority.label}</span>
           </td>
-          <td><code class="sap-id-cell">${building.id}</code></td>
-          <td>${building.name}</td>
+          <td><code class="sap-id">${building.id}</code></td>
+          <td class="cell-name">${building.name}</td>
           <td>${building.kanton}</td>
           <td>
             <span class="confidence-value ${building.confidence.total < 50 ? 'critical' : building.confidence.total < 80 ? 'warning' : 'ok'}">
@@ -1532,15 +1951,15 @@
             </span>
           </td>
           <td>
-            <div class="table-tags">
-              ${building.tags.map(tag => `<span class="tag ${tag}">${getTagLabel(tag)}</span>`).join('')}
-              ${building.tags.length === 0 ? '<span class="text-muted">—</span>' : ''}
+            <div class="badge-group">
+              ${building.errors.map(err => `<span class="badge badge-${err.type} badge-caps badge-sm">${getTagLabel(err.type)}</span>`).join('')}
+              ${building.errors.length === 0 ? '<span class="text-muted">—</span>' : ''}
             </div>
           </td>
-          <td>${building.assignee ? `<span class="assignee-tag">${building.assignee}</span>` : '<span class="text-muted">—</span>'}</td>
-          <td>${building.age}</td>
+          <td>${building.assignee ? `<span class="text-secondary">${building.assignee}</span>` : '<span class="text-muted">—</span>'}</td>
+          <td class="text-muted" title="${formatDateTime(building.lastUpdate)} von ${building.lastUpdateBy || '—'}">${formatRelativeTime(building.lastUpdate)}</td>
         </tr>
-      `).join('');
+      `}).join('');
 
       document.getElementById('table-count').textContent = `(${filteredBuildings.length})`;
     }
@@ -1599,23 +2018,61 @@
     }
 
     // ========================================
-    // Basemap Selector (swisstopo style)
+    // Basemap Selector
     // ========================================
     let currentBasemap = 'color';
+    let basemapLayer = null;
+
+    const basemapConfigs = {
+      none: {
+        url: null,
+        attribution: ''
+      },
+      grey: {
+        url: 'https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png',
+        attribution: '© OpenStreetMap © CARTO'
+      },
+      color: {
+        url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+        attribution: '© OpenStreetMap © CARTO'
+      },
+      satellite: {
+        url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+        attribution: '© Esri, Maxar, Earthstar Geographics'
+      }
+    };
+
+    function switchBasemapTiles(basemapId) {
+      const config = basemapConfigs[basemapId];
+
+      // Remove existing basemap layer
+      if (basemapLayer) {
+        map.removeLayer(basemapLayer);
+        basemapLayer = null;
+      }
+
+      // Add new basemap layer if not 'none'
+      if (config.url) {
+        basemapLayer = L.tileLayer(config.url, {
+          attribution: config.attribution,
+          maxZoom: 19
+        });
+        basemapLayer.addTo(map);
+        basemapLayer.bringToBack();
+      }
+    }
 
     function setupBasemapSelector() {
-      const preview = document.getElementById('basemap-preview');
-      const menu = document.getElementById('basemap-menu');
-      const previewImg = document.getElementById('basemap-preview-img');
+      const selector = document.getElementById('basemap-selector');
+      const trigger = document.getElementById('basemap-trigger');
+      const triggerThumb = document.getElementById('basemap-trigger-thumb');
+      const panel = document.getElementById('basemap-panel');
       const options = document.querySelectorAll('.basemap-option');
 
-      // Toggle menu on preview click
-      preview.addEventListener('click', (e) => {
+      // Toggle panel on trigger click
+      trigger.addEventListener('click', (e) => {
         e.stopPropagation();
-        menu.classList.toggle('expanded');
-        if (menu.classList.contains('expanded')) {
-          preview.style.display = 'none';
-        }
+        selector.classList.toggle('expanded');
       });
 
       // Handle option selection
@@ -1628,28 +2085,30 @@
           options.forEach(opt => opt.classList.remove('active'));
           option.classList.add('active');
 
-          // Update preview thumbnail class
-          previewImg.className = 'basemap-preview-img basemap-' + basemap;
+          // Update trigger thumbnail to show current basemap
+          triggerThumb.className = 'basemap-thumb basemap-' + basemap;
 
-          // Close menu
-          menu.classList.remove('expanded');
-          preview.style.display = 'flex';
+          // Switch the actual map tiles
+          switchBasemapTiles(basemap);
 
-          // Here you would switch the actual map tiles
-          // switchBasemapTiles(basemap);
+          // Collapse the panel
+          selector.classList.remove('expanded');
         });
       });
 
-      // Close menu when clicking outside
+      // Close panel when clicking outside
       document.addEventListener('click', (e) => {
-        if (!menu.contains(e.target) && !preview.contains(e.target)) {
-          menu.classList.remove('expanded');
-          preview.style.display = 'flex';
+        if (!selector.contains(e.target)) {
+          selector.classList.remove('expanded');
         }
       });
 
-      // Set initial preview
-      previewImg.className = 'basemap-preview-img basemap-' + currentBasemap;
+      // Close panel on Escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          selector.classList.remove('expanded');
+        }
+      });
     }
 
     // ========================================
@@ -1715,6 +2174,164 @@
           isResizing = false;
           resizeHandle.classList.remove('dragging');
         }
+      });
+    }
+
+    // ========================================
+    // Accordion Toggle
+    // ========================================
+    function setupAccordions() {
+      document.querySelectorAll('.accordion-header').forEach(header => {
+        header.addEventListener('click', () => {
+          const accordion = header.closest('.accordion');
+          accordion.classList.toggle('open');
+        });
+      });
+    }
+
+    // ========================================
+    // Map Context Menu (Right-Click)
+    // ========================================
+    let contextMenuLatLng = null;
+
+    function setupContextMenu() {
+      const contextMenu = document.getElementById('map-context-menu');
+      const contextMenuCoords = document.getElementById('context-menu-coords');
+      const contextMenuCoordsText = document.getElementById('context-menu-coords-text');
+      const contextMenuShare = document.getElementById('context-menu-share');
+      const contextMenuCenter = document.getElementById('context-menu-center');
+      const contextMenuNearest = document.getElementById('context-menu-nearest');
+      const mapContainer = document.getElementById('map');
+
+      // Show context menu on right-click
+      map.on('contextmenu', function(e) {
+        e.originalEvent.preventDefault();
+
+        // Store clicked coordinates
+        contextMenuLatLng = e.latlng;
+
+        // Update coordinates display
+        const lat = contextMenuLatLng.lat.toFixed(5);
+        const lng = contextMenuLatLng.lng.toFixed(5);
+        contextMenuCoordsText.textContent = lat + ', ' + lng;
+        contextMenuCoords.classList.remove('copied');
+
+        // Get map container dimensions
+        const mapRect = mapContainer.getBoundingClientRect();
+        const menuWidth = 200;
+        const menuHeight = 160;
+
+        // Calculate click position relative to map
+        const clickX = e.containerPoint.x;
+        const clickY = e.containerPoint.y;
+
+        // Edge detection
+        const flipHorizontal = (clickX + menuWidth) > mapRect.width;
+        const flipVertical = (clickY + menuHeight) > mapRect.height;
+
+        // Position the menu relative to map container
+        contextMenu.style.left = (mapRect.left + clickX) + 'px';
+        contextMenu.style.top = (mapRect.top + clickY) + 'px';
+
+        // Apply flip classes
+        contextMenu.classList.toggle('flip-horizontal', flipHorizontal);
+        contextMenu.classList.toggle('flip-vertical', flipVertical);
+
+        // Show menu
+        contextMenu.classList.add('show');
+
+        // Refresh icons
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+      });
+
+      // Hide context menu function
+      function hideContextMenu() {
+        contextMenu.classList.remove('show');
+      }
+
+      // Hide on map click
+      map.on('click', hideContextMenu);
+      map.on('movestart', hideContextMenu);
+
+      // Hide on Escape key
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          hideContextMenu();
+        }
+      });
+
+      // Hide when clicking outside
+      document.addEventListener('click', function(e) {
+        if (!contextMenu.contains(e.target)) {
+          hideContextMenu();
+        }
+      });
+
+      // Copy coordinates
+      contextMenuCoords.addEventListener('click', function() {
+        const coordsText = contextMenuCoordsText.textContent;
+        navigator.clipboard.writeText(coordsText).then(function() {
+          contextMenuCoords.classList.add('copied');
+          setTimeout(hideContextMenu, 500);
+        }).catch(function(err) {
+          console.error('Failed to copy coordinates:', err);
+        });
+      });
+
+      // Share location
+      contextMenuShare.addEventListener('click', function() {
+        if (!contextMenuLatLng) return;
+
+        const lat = contextMenuLatLng.lat.toFixed(5);
+        const lng = contextMenuLatLng.lng.toFixed(5);
+        const zoom = Math.round(map.getZoom());
+        const shareUrl = window.location.origin + window.location.pathname +
+          '?tab=karte&lat=' + lat + '&lng=' + lng + '&zoom=' + zoom;
+
+        hideContextMenu();
+
+        if (navigator.share) {
+          navigator.share({
+            title: 'BBL Liegenschaftsinventar - Standort',
+            text: 'Standort anzeigen:',
+            url: shareUrl
+          }).catch(function(err) {
+            if (err.name !== 'AbortError') {
+              navigator.clipboard.writeText(shareUrl);
+            }
+          });
+        } else {
+          navigator.clipboard.writeText(shareUrl);
+        }
+      });
+
+      // Center map here
+      contextMenuCenter.addEventListener('click', function() {
+        if (!contextMenuLatLng) return;
+        map.setView(contextMenuLatLng, map.getZoom());
+        hideContextMenu();
+      });
+
+      // Find nearest building
+      contextMenuNearest.addEventListener('click', function() {
+        if (!contextMenuLatLng) return;
+
+        let nearestBuilding = null;
+        let minDistance = Infinity;
+
+        buildings.forEach(function(building) {
+          const distance = map.distance(contextMenuLatLng, [building.lat, building.lng]);
+          if (distance < minDistance) {
+            minDistance = distance;
+            nearestBuilding = building;
+          }
+        });
+
+        if (nearestBuilding) {
+          selectBuilding(nearestBuilding.id);
+        }
+
+        hideContextMenu();
       });
     }
   </script>
